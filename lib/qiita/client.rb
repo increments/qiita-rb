@@ -40,7 +40,11 @@ module Qiita
     end
 
     def connection
-      @connection ||= Faraday.new(:url => ROOT_URL) do |faraday|
+      options = {
+        :url => ROOT_URL,
+        :ssl => { :verify => false }
+      }
+      @connection ||= Faraday.new(options) do |faraday|
         faraday.request :json
         faraday.adapter Faraday.default_adapter
         faraday.use Faraday::Response::RaiseQiitaError
