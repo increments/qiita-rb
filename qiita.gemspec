@@ -7,10 +7,13 @@ Gem::Specification.new do |gem|
   gem.name          = "qiita"
   gem.version       = Qiita::VERSION
   gem.authors       = ["Hiroshige Umino"]
-  gem.email         = ["hiroshige88@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.email         = ["yaotti@qiita.com"]
+  gem.description   = <<desc
+  Gets some tag's or user's items at qiita.com.
+  Creates, updates, deletes and stocks items at Qiita.
+  desc
+  gem.summary       = "Ruby wrapper for Qiita API v1."
+  gem.homepage      = "http://github.com/yaotti/qiita-rb"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
