@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.description   = <<desc
   Gets some tag's or user's items at qiita.com.
   Creates, updates, deletes and stocks items at Qiita.
-  desc
+desc
   gem.summary       = "Ruby wrapper for Qiita API v1."
   gem.homepage      = "http://github.com/yaotti/qiita-rb"
 
