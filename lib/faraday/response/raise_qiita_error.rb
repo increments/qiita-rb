@@ -18,17 +18,13 @@ module Faraday
         raise Qiita::UnprocessableEntity, error_message(response)
       when 500
         raise Qiita::InternalServerError, error_message(response)
-      when 501
-        raise Qiita::NotImplemented, error_message(response)
-      when 502
-        raise Qiita::BadGateway, error_message(response)
       when 503
         raise Qiita::ServiceUnavailable, error_message(response)
       end
     end
 
     def error_message(response)
-      message = JSON.parse(response[:body])['error']
+      message = response[:body]['error']
       return message unless message.empty?
       "#{response[:method].to_s.upcase} #{response[:url].to_s}: #{response[:status]}"
     end

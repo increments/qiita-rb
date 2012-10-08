@@ -4,38 +4,81 @@ require 'faraday/response/raise_qiita_error.rb'
 require 'json'
 require 'qiita'
 require 'qiita/error'
+require 'qiita/client/items'
+require 'qiita/client/tags'
+require 'qiita/client/users'
 
 module Qiita
   class Client
-    ROOT_URL = 'https://qiita.com/api/v1'
-    OPTION_KEYS = [:url_name, :password, :token].freeze
+    ROOT_URL = 'https://qiita.com/'
+    OPTIONS_KEYS = [:url_name, :password, :token].freeze
 
-    attr_accessor *OPTION_KEYS
+    attr_accessor *OPTIONS_KEYS
 
     def initialize(args)
-      OPTION_KEYS.each do |key|
+      OPTIONS_KEYS.each do |key|
         send("#{key}=", args[key])
       end
-      login if token.nil?
+      if token.nil? && url_name && password
+        login
+      end
     end
+
+    def rate_limit params={}
+      get '/rate_limit', params
+    end
+
+    include Qiita::Client::Items
+    include Qiita::Client::Tags
+    include Qiita::Client::Users
 
     private
 
     def login
-      response = connection.post do |req|
-        req.url '/api/v1/auth'
-        req.headers['Content-Type'] = 'application/json'
-        req.body = { :url_name => @url_name, :password => @password }.to_json
-      end
-      @token = JSON.parse(response.body)['token']
+      json = post '/auth', { :url_name => @url_name, :password => @password }
+      @token = json['token']
     end
 
     def connection
       @connection ||= Faraday.new(:url => ROOT_URL) do |faraday|
         faraday.request :json
-        faraday.adapter  Faraday.default_adapter
+        faraday.adapter Faraday.default_adapter
         faraday.use Faraday::Response::RaiseQiitaError
+        faraday.use FaradayMiddleware::Mashify
+        faraday.use FaradayMiddleware::ParseJson
       end
+    end
+
+    def get(path, params={})
+      request(:get, path, params)
+    end
+
+    def delete(path, params={})
+      request(:delete, path, params)
+    end
+
+    def post(path, params={})
+      request(:post, path, params)
+    end
+
+    def put(path, params={})
+      request(:put, path, params)
+    end
+
+    def request(method, path, params)
+      path = "/api/v1/#{path}"
+      params.merge!(:token => token) if token
+      response = connection.send(method) do |req|
+        req.headers['Content-Type'] = 'application/json'
+        case method
+        when :get, :delete
+          req.url path, params
+        when :post, :put
+          req.path = path
+          req.body = params.to_json unless params.empty?
+        end
+      end
+      response.body
     end
   end
 end
