@@ -10,6 +10,10 @@ module Qiita
         path = url_name ? "/users/#{url_name}/stocks" : '/stocks'
         get path, params
       end
+
+      def user(url_name)
+        get "/users/#{url_name}"
+      end
     end
   end
 end
