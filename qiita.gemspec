@@ -24,4 +24,6 @@ desc
   gem.add_dependency 'faraday_middleware', '~> 0.8'
   gem.add_dependency 'json', '~> 1.7'
   gem.add_dependency 'hashie', '~> 1.2'
+
+  gem.add_development_dependency 'rspec'
 end
