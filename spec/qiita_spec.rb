@@ -4,7 +4,7 @@ describe Qiita do
   it { should respond_to(:new) }
 
   describe 'new' do
-    it 'returns Qitta::Client instance' do
+    it 'returns Qiita::Client instance' do
       subject.new.should be_a_kind_of(Qiita::Client)
     end
   end
