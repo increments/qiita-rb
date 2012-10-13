@@ -19,8 +19,9 @@ module Qiita
         get path, params
       end
 
-      def user(url_name)
-        get "/users/#{url_name}"
+      def user(url_name=nil)
+        path = url_name ? "/users/#{url_name}" : '/user'
+        get path
       end
     end
   end
