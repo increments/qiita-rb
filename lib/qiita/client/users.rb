@@ -6,6 +6,10 @@ module Qiita
         get path, params
       end
 
+      def user_following_users(url_name, params={})
+        get "/users/#{url_name}/following_users", params
+      end
+
       def user_stocks(url_name=nil, params={})
         path = url_name ? "/users/#{url_name}/stocks" : '/stocks'
         get path, params
