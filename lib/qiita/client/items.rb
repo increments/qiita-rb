@@ -17,6 +17,10 @@ module Qiita
         get "/items/#{uuid}"
       end
 
+      def items(params={})
+        get "/items", params
+      end
+
       def search_items(query, params)
         get "/search", params.merge(:q => query)
       end
