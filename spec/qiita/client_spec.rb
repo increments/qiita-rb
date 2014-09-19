@@ -1,6 +1,119 @@
 require "spec_helper"
 
 describe Qiita::Client do
+  def stub_api_request
+    stub_request(request_method, requested_url).with(
+      body: request_body,
+      headers: requested_headers,
+    ).to_return(
+      body: response_body,
+      headers: response_headers,
+      status: status_code,
+    )
+  end
+
+  let(:status_code) do
+    200
+  end
+
+  let(:response_body) do
+    response_hash.to_json
+  end
+
+  let(:response_hash) do
+    { "dummy" => "dummy" }
+  end
+
+  let(:response_headers) do
+    { "Content-Type" => "application/json" }
+  end
+
+  let(:requested_headers) do
+    Qiita::Client::DEFAULT_HEADERS
+  end
+
+  let(:request_body) do
+    params.nil? || [:get, :delete].include?(request_method) ? nil : params
+  end
+
+  let(:requested_url) do
+    "https://#{requested_host}#{path}"
+  end
+
+  let(:requested_host) do
+    Qiita::Client::DEFAULT_HOST
+  end
+
+  let(:host) do
+    Qiita::Client::DEFAULT_HOST
+  end
+
+  let(:client) do
+    described_class.new(options)
+  end
+
+  let(:options) do
+    {}
+  end
+
+  let(:arguments) do
+    [path, params, headers]
+  end
+
+  let(:path) do
+    "/api/v2/dummy"
+  end
+
+  let(:params) do
+  end
+
+  let(:headers) do
+    {}
+  end
+
+  shared_examples_for "returns a Qiita::Response" do
+    it "returns a Qiita::Response" do
+      should be_a Qiita::Response
+      subject.body.should eq response_hash
+      subject.headers.should eq response_headers
+      subject.status.should eq status_code
+    end
+  end
+
+  shared_examples_for "valid condition" do
+    context "with valid condition" do
+      include_examples "returns a Qiita::Response"
+    end
+  end
+
+  shared_examples_for "sends request with JSON-encoded body" do
+    context "with params" do
+      let(:params) do
+        { key1: "value1", key2: "value2" }
+      end
+
+      it "sends request with JSON-encoded body" do
+        should be_a Qiita::Response
+      end
+    end
+  end
+
+  shared_examples_for "sends request with URL query" do
+    context "with params" do
+      let(:params) do
+        { key1: "value1", key2: "value2" }
+      end
+
+      let(:requested_url) do
+        super() + "?key1=value1&key2=value2"
+      end
+
+      it "sends request with URL query" do
+        should be_a Qiita::Response
+      end
+    end
+  end
+
   describe ".new" do
     subject do
       described_class.new(*arguments)
@@ -44,90 +157,19 @@ describe Qiita::Client do
 
   describe "#get" do
     before do
-      stub_request(:get, requested_url).with(headers: requested_headers).to_return(
-        body: response_body,
-        headers: response_headers,
-        status: status_code,
-      )
+      stub_api_request
     end
 
     subject do
       client.get(*arguments)
     end
 
-    let(:status_code) do
-      200
+    let(:request_method) do
+      :get
     end
 
-    let(:response_body) do
-      response_hash.to_json
-    end
-
-    let(:response_hash) do
-      { "dummy" => "dummy" }
-    end
-
-
-    let(:response_headers) do
-      { "Content-Type" => "application/json" }
-    end
-
-    let(:requested_headers) do
-      {
-        "Accept" => "*/*",
-        "Accept-Encoding" => "gzip;q=1.0,deflate;q=0.6,identity;q=0.3",
-        "User-Agent" => Qiita::Client::DEFAULT_USER_AGENT,
-      }
-    end
-
-    let(:requested_url) do
-      "https://#{requested_host}#{path}"
-    end
-
-    let(:requested_host) do
-      Qiita::Client::DEFAULT_HOST
-    end
-
-    let(:host) do
-      Qiita::Client::DEFAULT_HOST
-    end
-
-    let(:client) do
-      described_class.new(options)
-    end
-
-    let(:options) do
-      {}
-    end
-
-    let(:arguments) do
-      [path, params, headers]
-    end
-
-    let(:path) do
-      "/api/v2/dummy"
-    end
-
-    let(:params) do
-      {}
-    end
-
-    let(:headers) do
-      {}
-    end
-
-    shared_examples_for "returns a Qiita::Response" do
-      it "returns a Qiita::Response" do
-        should be_a Qiita::Response
-        subject.body.should eq response_hash
-        subject.headers.should eq response_headers
-        subject.status.should eq status_code
-      end
-    end
-
-    context "with valid condition" do
-      include_examples "returns a Qiita::Response"
-    end
+    include_examples "valid condition"
+    include_examples "sends request with URL query"
 
     context "without headers" do
       let(:arguments) do
@@ -161,20 +203,6 @@ describe Qiita::Client do
       end
     end
 
-    context "with params" do
-      let(:params) do
-        { key1: "value1", key2: "value2" }
-      end
-
-      let(:requested_url) do
-        super() + "?key1=value1&key2=value2"
-      end
-
-      it "sends request with URL query, encoded from given params" do
-        should be_a Qiita::Response
-      end
-    end
-
     context "with headers" do
       let(:headers) do
         {
@@ -192,18 +220,98 @@ describe Qiita::Client do
       end
     end
 
-    context "with headers duplicated with default headers" do
-      let(:headers) do
-        { "User-Agent" => "dummy" }
+    context "with params" do
+      let(:params) do
+        { key1: "value1", key2: "value2" }
       end
 
-      let(:requested_headers) do
-        super().merge(headers)
+      let(:requested_url) do
+        super() + "?key1=value1&key2=value2"
       end
 
-      it "sends request with overridden headers" do
+      it "sends request with URL query, encoded from given params" do
         should be_a Qiita::Response
       end
     end
+  end
+
+  describe "#post" do
+    before do
+      stub_api_request
+    end
+
+    subject do
+      client.post(*arguments)
+    end
+
+    let(:request_method) do
+      :post
+    end
+
+    let(:status_code) do
+      201
+    end
+
+    include_examples "valid condition"
+    include_examples "sends request with JSON-encoded body"
+  end
+
+  describe "#patch" do
+    before do
+      stub_api_request
+    end
+
+    subject do
+      client.patch(*arguments)
+    end
+
+    let(:request_method) do
+      :patch
+    end
+
+    include_examples "valid condition"
+    include_examples "sends request with JSON-encoded body"
+  end
+
+  describe "#put" do
+    before do
+      stub_api_request
+    end
+
+    subject do
+      client.put(*arguments)
+    end
+
+    let(:request_method) do
+      :put
+    end
+
+    let(:status_code) do
+      204
+    end
+
+    include_examples "valid condition"
+    include_examples "sends request with JSON-encoded body"
+  end
+
+  describe "#delete" do
+    before do
+      stub_api_request
+    end
+
+    subject do
+      client.delete(*arguments)
+    end
+
+    let(:request_method) do
+      :delete
+    end
+
+    let(:status_code) do
+      204
+    end
+
+    include_examples "valid condition"
+    include_examples "sends request with URL query"
   end
 end

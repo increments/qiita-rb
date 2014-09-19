@@ -3,18 +3,16 @@
 #
 module Qiita
   class Client
+    DEFAULT_ACCEPT = "application/json"
+
     DEFAULT_HOST = "qiita.com"
 
     DEFAULT_USER_AGENT = "Qiita Ruby Gem #{Qiita::VERSION}"
 
-    DEFAULT_HEADERS = { "User-Agent" => DEFAULT_USER_AGENT }
-
-    def self.merge_params_into_path(path, params)
-      uri = URI.parse(path)
-      params = Rack::Utils.parse_nested_query(uri.query).merge(params)
-      uri.query = Rack::Utils.build_query(params)
-      uri.to_s
-    end
+    DEFAULT_HEADERS = {
+      "Accept" => DEFAULT_ACCEPT,
+      "User-Agent" => DEFAULT_USER_AGENT,
+    }
 
     # ### Qiita::Client.new(options = {})
     # Creates a new instance of `Qiita::Client` class.
@@ -34,7 +32,7 @@ module Qiita
       @host = host
     end
 
-    # ### Qiita::Client#get(path, params = {}, headers = {})
+    # ### Qiita::Client#get(path, params = nil, headers = nil)
     # Sends GET request with given parameters, then returns a `Qiita::Response`.
     # `params` are url-encoded and used as URI query string.
     #
@@ -42,11 +40,11 @@ module Qiita
     # client.get("/api/v2/items", page: 2)
     # ```
     #
-    def get(path, params = {}, headers = {})
-      process(:get, self.class.merge_params_into_path(path, params), nil, headers)
+    def get(path, params = nil, headers = nil)
+      process(:get, path, params, headers)
     end
 
-    # ### Qiita::Client#post(path, params = {}, headers = {})
+    # ### Qiita::Client#post(path, params = nil, headers = nil)
     # Sends POST request with given parameters, then returns a Qiita::Response.
     # `params` are JSON-encoded and used as request body.
     #
@@ -54,11 +52,11 @@ module Qiita
     # client.post("/api/v2/items", title: "...", body: "...")
     # ```
     #
-    def post(path, params = {}, headers = {})
+    def post(path, params = nil, headers = nil)
       process(:post, path, params, headers)
     end
 
-    # ### Qiita::Client#patch(path, params = {}, headers = {})
+    # ### Qiita::Client#patch(path, params = nil, headers = nil)
     # Sends PATCH request with given parameters, then returns a Qiita::Response.
     # `params` are JSON-encoded and used as request body.
     #
@@ -66,29 +64,31 @@ module Qiita
     # client.patch("/api/v2/items/543efd13001e30837319", title: "...", body: "...")
     # ```
     #
-    def patch(path, params = {}, headers = {})
+    def patch(path, params = nil, headers = nil)
       process(:patch, path, params, headers)
     end
 
-    # ### Qiita::Client#put(path, params = {}, headers = {})
+    # ### Qiita::Client#put(path, params = nil, headers = nil)
     # Sends PUT request, then returns a Qiita::Response.
+    # `params` are JSON-encoded and used as request body.
     #
     # ```rb
     # client.put("/api/v2/items/543efd13001e30837319/stock")
     # ```
     #
-    def put(path, params = {}, headers = {})
+    def put(path, params = nil, headers = nil)
       process(:put, path, params, headers)
     end
 
-    # ### Qiita::Client#delete(path, params = {}, headers = {})
+    # ### Qiita::Client#delete(path, params = nil, headers = nil)
     # Sends DELETE request, then returns a Qiita::Response.
+    # `params` are url-encoded and used as URI query string.
     #
     # ```rb
     # client.delete("/api/v2/items/543efd13001e30837319/stock")
     # ```
     #
-    def delete(path, params = {}, headers = {})
+    def delete(path, params = nil, headers = nil)
       process(:delete, path, params, headers)
     end
 
@@ -96,13 +96,21 @@ module Qiita
 
     def connection
       @connection ||= Faraday.new(headers: DEFAULT_HEADERS, url: url_prefix) do |connection|
-        connection.adapter Faraday.default_adapter
+        connection.request :json
         connection.response :json
+        connection.adapter Faraday.default_adapter
       end
     end
 
     def process(request_method, path, params, headers)
-      Qiita::Response.new(connection.send(request_method, path, params, headers))
+      Qiita::Response.new(
+        connection.send(
+          request_method,
+          path,
+          params,
+          headers,
+        )
+      )
     end
 
     def url_prefix
