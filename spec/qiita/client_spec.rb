@@ -45,6 +45,7 @@ describe Qiita::Client do
   describe "#get" do
     before do
       stub_request(:get, requested_url).with(headers: requested_headers).to_return(
+        body: response_body,
         headers: response_headers,
         status: status_code,
       )
@@ -57,6 +58,15 @@ describe Qiita::Client do
     let(:status_code) do
       200
     end
+
+    let(:response_body) do
+      response_hash.to_json
+    end
+
+    let(:response_hash) do
+      { "dummy" => "dummy" }
+    end
+
 
     let(:response_headers) do
       { "Content-Type" => "application/json" }
@@ -109,6 +119,7 @@ describe Qiita::Client do
     shared_examples_for "returns a Qiita::Response" do
       it "returns a Qiita::Response" do
         should be_a Qiita::Response
+        subject.body.should eq response_hash
         subject.headers.should eq response_headers
         subject.status.should eq status_code
       end

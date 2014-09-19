@@ -97,6 +97,7 @@ module Qiita
     def connection
       @connection ||= Faraday.new(headers: DEFAULT_HEADERS, url: url_prefix) do |connection|
         connection.adapter Faraday.default_adapter
+        connection.response :json
       end
     end
 
