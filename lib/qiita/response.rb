@@ -52,7 +52,7 @@ module Qiita
     # ```
     #
     # ```
-    # HTTP/1.1 200
+    # HTTP/1.1 200 OK
     # Cache-Control: max-age=0, private, must-revalidate
     # Connection: Close
     # Content-Length: 448
@@ -75,11 +75,17 @@ module Qiita
     #
     def to_s
       @to_s ||= begin
-        string = "HTTP/1.1 #{status}\n"
+        string = "HTTP/1.1 #{status} #{status_message}\n"
         string << headers.sort.map {|key, value| "#{key}: #{value}" }.join("\n") << "\n"
         string << "\n#{body}\n" unless body.empty?
         string
       end
+    end
+
+    private
+
+    def status_message
+      Rack::Utils::HTTP_STATUS_CODES[status]
     end
   end
 end
