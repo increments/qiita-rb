@@ -36,8 +36,8 @@ response.body #=> {
 There are some useful commands to start development of this library.
 
 ```sh
-# Install dependent modules required for development.
-make prepare
+# Set up by installing some softwares to start development.
+make setup
 
 # Run all tests.
 make test
