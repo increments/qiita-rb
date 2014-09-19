@@ -1,4 +1,4 @@
-Copyright (c) 2012 Hiroshige Umino
+Copyright (c) 2014 Ryo Nakamura
 
 MIT License
 
