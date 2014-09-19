@@ -92,8 +92,13 @@ module Qiita
       process(:delete, path, params, headers)
     end
 
-    private
-
+    # ### Qiita::Client#connection
+    # Returns a Faraday::Connection to customize by your favorite middlewares.
+    #
+    # ```rb
+    # client.connection.response :logger
+    # ```
+    #
     def connection
       @connection ||= Faraday.new(headers: default_headers, url: url_prefix) do |connection|
         connection.request :json
@@ -101,6 +106,8 @@ module Qiita
         connection.adapter Faraday.default_adapter
       end
     end
+
+    private
 
     def default_headers
       headers = DEFAULT_HEADERS.clone

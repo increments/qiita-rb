@@ -51,3 +51,10 @@ Sends DELETE request, then returns a Qiita::Response.
 client.delete("/api/v2/items/543efd13001e30837319/stock")
 ```
 
+### Qiita::Client#connection
+Returns a Faraday::Connection to customize by your favorite middlewares.
+
+```rb
+client.connection.response :logger
+```
+
