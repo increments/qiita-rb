@@ -29,7 +29,7 @@ describe Qiita::Client do
   end
 
   let(:requested_headers) do
-    Qiita::Client::DEFAULT_HEADERS
+    Qiita::Client::DEFAULT_HEADERS.clone
   end
 
   let(:request_body) do
@@ -199,6 +199,24 @@ describe Qiita::Client do
       end
 
       it "sends request to configured host" do
+        should be_a Qiita::Response
+      end
+    end
+
+    context "with a Qiita::Client created with :access_token option" do
+      before do
+        options[:access_token] = access_token
+      end
+
+      let(:access_token) do
+        "dummy-access-token"
+      end
+
+      let(:requested_headers) do
+        super().merge("Authorization" => "token #{access_token}")
+      end
+
+      it "sends request with configured access token" do
         should be_a Qiita::Response
       end
     end

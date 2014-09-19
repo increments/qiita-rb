@@ -95,11 +95,17 @@ module Qiita
     private
 
     def connection
-      @connection ||= Faraday.new(headers: DEFAULT_HEADERS, url: url_prefix) do |connection|
+      @connection ||= Faraday.new(headers: default_headers, url: url_prefix) do |connection|
         connection.request :json
         connection.response :json
         connection.adapter Faraday.default_adapter
       end
+    end
+
+    def default_headers
+      headers = DEFAULT_HEADERS.clone
+      headers["Authorization"] = "token #{@access_token}" if @access_token
+      headers
     end
 
     def process(request_method, path, params, headers)
