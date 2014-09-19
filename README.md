@@ -9,6 +9,8 @@ gem install qiita
 ```
 
 ## Usage
+Here is an example usage of this library. See [/doc](/doc) for more details.
+
 ```rb
 require "qiita"
 
