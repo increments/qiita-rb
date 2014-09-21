@@ -5,4 +5,5 @@ require "rack/utils"
 
 require "qiita/version"
 require "qiita/client"
+require "qiita/resource_based_methods"
 require "qiita/response"

@@ -1,0 +1,70 @@
+#!/usr/bin/env ruby
+# # script/generate
+# Generates source code text of Qiita::ResourceBasedMethods from given JSON Schema.
+#
+# ## Usage
+# Run this script with a path to JSON Schema of Qiita API v2, available only for staff.
+#
+# ```sh
+# bundle exec ./script/generate /path/to/json/schema > lib/qiita/resource_based_methods.rb
+# ```
+#
+require "active_support/core_ext/object/try"
+require "active_support/core_ext/string/indent"
+require "active_support/core_ext/string/strip"
+require "json_schema"
+require "ostruct"
+require "yaml"
+
+# View object class to generate String representation of each method.
+method_class = Class.new(OpenStruct) do
+  def to_s
+    <<-EOS.strip_heredoc
+      def #{method_name}(#{arguments})
+        client.#{request_method}(#{path}, params, headers)
+      end
+    EOS
+  end
+
+  private
+
+  def arguments
+    [required_argument_names + optional_arguments].join(", ")
+  end
+
+  def optional_arguments
+    ["params = nil", "headers = nil"]
+  end
+
+  def path
+    ?" + href.gsub(%r<{\(.*/([^/]+)\)}>, '#{\1}') + ?"
+  end
+end
+
+path_to_json_schema = ARGV[0]
+hash = YAML.load_file(path_to_json_schema)
+schema = JsonSchema.parse!(hash).tap(&:expand_references!)
+links = schema.properties.values.map(&:links).flatten
+methods = links.map do |link|
+  method_class.new(
+    available_parameters: (link.schema.try(:properties) || {}).map do |name, property|
+      {
+        description: property.description,
+        name: name,
+        type: property.type,
+      }
+    end,
+    href: link.href,
+    method_name: link.title,
+    request_method: link.method.downcase,
+    required_argument_names: link.href.scan(%r<{\(.*/([^/]+)\)}>).flatten,
+  )
+end
+
+puts <<-EOS
+module Qiita
+  module ResourceBasedMethods
+    #{methods.join("\n").indent(4).strip}
+  end
+end
+EOS
