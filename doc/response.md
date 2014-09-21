@@ -27,7 +27,7 @@ puts client.get("/api/v2/user")
 ```
 
 ```
-HTTP/1.1 200
+HTTP/1.1 200 OK
 Cache-Control: max-age=0, private, must-revalidate
 Connection: Close
 Content-Length: 448
