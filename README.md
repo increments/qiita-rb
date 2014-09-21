@@ -15,7 +15,7 @@ Here is an example usage of this library. See [/doc](/doc) for more details.
 require "qiita"
 
 client = Qiita::Client.new(access_token: ENV["ACCESS_TOKEN"])
-response = client.get("/api/v2/user")
+response = client.get_user("r7kamura")
 response.body #=> {
   "description"         => "",
   "facebook_id"         => "",
