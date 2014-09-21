@@ -24,7 +24,7 @@ method_class = Class.new(OpenStruct) do
       # #{description}
       #
       def #{method_name}(#{arguments})
-        client.#{request_method}(#{path}, params, headers)
+        #{request_method}(#{path}, params, headers)
       end
     EOS
   end

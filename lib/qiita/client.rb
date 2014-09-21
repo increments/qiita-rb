@@ -14,6 +14,8 @@ module Qiita
       "User-Agent" => DEFAULT_USER_AGENT,
     }
 
+    include ResourceBasedMethods
+
     # ### Qiita::Client.new(options = {})
     # Creates a new instance of `Qiita::Client` class.
     # `options` can have following key-values:
