@@ -20,6 +20,9 @@ require "yaml"
 method_class = Class.new(OpenStruct) do
   def to_s
     <<-EOS.strip_heredoc
+      # ### Qiita::Client##{method_name}(#{arguments})
+      # #{description}
+      #
       def #{method_name}(#{arguments})
         client.#{request_method}(#{path}, params, headers)
       end
@@ -54,6 +57,7 @@ methods = links.map do |link|
         type: property.type,
       }
     end,
+    description: link.description,
     href: link.href,
     method_name: link.title,
     request_method: link.method.downcase,
