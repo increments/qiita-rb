@@ -20,6 +20,34 @@ module Qiita
       @raw_body
     end
 
+    # ### Qiita::Response#first_page_url
+    # Returns first page URL or nil.
+    #
+    def first_page_url
+      links_table["first"]
+    end
+
+    # ### Qiita::Response#last_page_url
+    # Returns last page URL or nil.
+    #
+    def last_page_url
+      links_table["last"]
+    end
+
+    # ### Qiita::Response#next_page_url
+    # Returns next page URL or nil.
+    #
+    def next_page_url
+      links_table["next"]
+    end
+
+    # ### Qiita::Response#previous_page_url
+    # Returns previous page URL or nil.
+    #
+    def previous_page_url
+      links_table["previous"]
+    end
+
     # ### Qiita::Response#headers
     # Returns response headers returned from API as a `Hash`.
     #
@@ -86,6 +114,13 @@ module Qiita
 
     def status_message
       Rack::Utils::HTTP_STATUS_CODES[status]
+    end
+
+    def links_table
+      @links_table ||= (headers["Link"] || "").split(", ").inject({}) do |table, section|
+        url, rel = section.match(/\A<(.+)>; rel="(.+)"\z/)[1..2]
+        table.merge(rel => url)
+      end
     end
   end
 end
