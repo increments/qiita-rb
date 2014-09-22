@@ -42,6 +42,20 @@ module Qiita
       post("/api/v2/items/#{item_id}/comments", params, headers)
     end
 
+    # ### Qiita::Client#thank_comment(comment_id, params = nil, headers = nil)
+    # 特定のコメントにThankを付けます。
+    #
+    def thank_comment(comment_id, params = nil, headers = nil)
+      put("/api/v2/comments/#{comment_id}/thank", params, headers)
+    end
+
+    # ### Qiita::Client#unthank_comment(comment_id, params = nil, headers = nil)
+    # 特定のコメントからThankを外します。
+    #
+    def unthank_comment(comment_id, params = nil, headers = nil)
+      delete("/api/v2/comments/#{comment_id}/thank", params, headers)
+    end
+
     # ### Qiita::Client#list_items(params = nil, headers = nil)
     # 新着順に全ての投稿一覧を返します。
     #

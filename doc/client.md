@@ -76,6 +76,12 @@ client.connection.response :logger
 ### Qiita::Client#create_item_comment(item_id, params = nil, headers = nil)
 特定の投稿にコメントを付けます。
 
+### Qiita::Client#thank_comment(comment_id, params = nil, headers = nil)
+特定のコメントにThankを付けます。
+
+### Qiita::Client#unthank_comment(comment_id, params = nil, headers = nil)
+特定のコメントからThankを外します。
+
 ### Qiita::Client#list_items(params = nil, headers = nil)
 新着順に全ての投稿一覧を返します。
 
