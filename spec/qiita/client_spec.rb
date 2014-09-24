@@ -213,7 +213,7 @@ describe Qiita::Client do
       end
 
       let(:requested_headers) do
-        super().merge("Authorization" => "token #{access_token}")
+        super().merge("Authorization" => "Bearer #{access_token}")
       end
 
       it "sends request with configured access token" do

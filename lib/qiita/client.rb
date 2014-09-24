@@ -113,7 +113,7 @@ module Qiita
 
     def default_headers
       headers = DEFAULT_HEADERS.clone
-      headers["Authorization"] = "token #{@access_token}" if @access_token
+      headers["Authorization"] = "Bearer #{@access_token}" if @access_token
       headers
     end
 
