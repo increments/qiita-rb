@@ -203,6 +203,13 @@ module Qiita
       get("/api/v2/templates", params, headers)
     end
 
+    # ### Qiita::Client#get_template(id, params = nil, headers = nil)
+    # 特定のテンプレートを返します。
+    #
+    def get_template(id, params = nil, headers = nil)
+      get("/api/v2/templates/#{id}", params, headers)
+    end
+
     # ### Qiita::Client#delete_template(id, params = nil, headers = nil)
     # 特定のテンプレートを削除します。
     #
@@ -242,7 +249,7 @@ module Qiita
     # アクセストークンに紐付いたユーザを返します。
     #
     def get_authenticated_user(params = nil, headers = nil)
-      get("/api/v2/user", params, headers)
+      get("/api/v2/authenticated_user", params, headers)
     end
 
     # ### Qiita::Client#list_user_followees(user_id, params = nil, headers = nil)
