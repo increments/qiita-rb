@@ -74,3 +74,5 @@ while `key:=value` is parsed into JSON value (e.g. key:=17 will be `{"key":17}`)
 $ qiita list_items page=2 per_page=10
 $ qiita create_item < params.json
 ```
+
+![](images/cli.png)
