@@ -1,3 +1,6 @@
+require "qiita/resource_based_methods"
+require "qiita/version"
+
 ## Qiita::Client
 # A class for API client to send HTTP request.
 #
@@ -29,7 +32,7 @@ module Qiita
     # Qiita::Client.new(host: "my-team-name.qiita.com")
     # ```
     #
-    def initialize(access_token: nil, host: DEFAULT_HOST)
+    def initialize(access_token: nil, host: nil)
       @access_token = access_token
       @host = host
     end
@@ -117,6 +120,10 @@ module Qiita
       headers
     end
 
+    def host
+      @host || DEFAULT_HOST
+    end
+
     def process(request_method, path, params, headers)
       Qiita::Response.new(
         connection.send(
@@ -129,7 +136,7 @@ module Qiita
     end
 
     def url_prefix
-      "https://#{@host}"
+      "https://#{host}"
     end
   end
 end

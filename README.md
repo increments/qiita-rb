@@ -1,52 +1,76 @@
 # Qiita
-A client library for Qiita API v2 written in Ruby.
+Qiita API v2 client library and CLI tool, written in Ruby.
 
-## Installation
-Note that this library requires Ruby 2.0.0 or higher.
+### Install
+Note: requires Ruby 2.0.0 or higher.
 
 ```sh
 gem install qiita
 ```
 
-## Usage
-Here is an example usage of this library. See [/doc](/doc) for more details.
+## Library
+See [/doc](/doc) for more details.
 
 ```rb
 require "qiita"
 
-client = Qiita::Client.new(access_token: ENV["ACCESS_TOKEN"])
-response = client.get_user("r7kamura")
-response.body #=> {
-  "description"         => "",
-  "facebook_id"         => "",
-  "followers_count"     => 149,
-  "followees_count"     => 22,
-  "github_login_name"   => "r7kamura",
-  "items_count"         => 13,
-  "linkedin_id"         => "",
-  "location"            => "",
-  "name"                => "",
-  "organization"        => "Increments Inc.",
-  "profile_image_url"   =>  "htps://secure.gravatar.co m/avatar/089127ffb92a19d3d37815673cca06dc?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-140.png",
-  "twitter_screen_name" => "r7kamura",
-  "url_name"            => "r7kamura",
-  "website_url"         => ""
-}
+client = Qiita::Client.new(access_token: "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcd")
+client.list_items
+client.list_users
+client.get_user_items("r7kamura")
+client.get_user("r7kamura")
+client.get_user("r7kamura").status
+client.get_user("r7kamura").headers
+client.get_user("r7kamura").body
 ```
 
-## For contributors
-There are some useful commands to start development of this library.
+## CLI
+`qiita` executable calls `Qiita::Client`'s methods.
 
-```sh
-# Set up by installing some softwares to start development.
-make setup
+```
+$ qiita <method> <arguments> [headers|params] [options]
+           |          |          |      |         |
+           |          |          |      |         `-- --access-token, -a
+           |          |          |      |             --help, -h
+           |          |          |      |             --host, -H
+           |          |          |      |             --no-body
+           |          |          |      |             --no-color
+           |          |          |      |             --no-header
+           |          |          |      |
+           |          |          |      `------------ key=value or key:=value
+           |          |          |
+           |          |          `------------------- Key:value
+           |          |
+           |          `------------------------------ required arguments for the method
+           |
+           `----------------------------------------- method name
 
-# Run all tests.
-make test
+$ qiita list_users
+$ qiita get_user r7kamura
+$ qiita list_user_items r7kamura
+```
 
-# Update API docs.
-make doc
+### Method and Arguments
+Pass [Qiita::Client's method name](doc/client.md) and required arguments.
 
-# Run `test` and `doc`.
-make
+### Access token
+Accepts access token via `-a, --access-token` or `QIITA_ACCESS_TOKEN` environment variable.
+
+### Headers
+To set custom request headers, use `Key:value` syntax.
+
+```
+$ qiita list_items "Authorization:Bearer 1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcd"
+```
+
+### Params
+Params are used for query string in GET method, or for request body in other methods
+You can set params by `key=value` or `key:=value` syntax.
+`key=value` is parsed into String value,
+while `key:=value` is parsed into JSON value (e.g. key:=17 will be `{"key":17}`).
+`qiita` also accepts params via STDIN.
+
+```
+$ qiita list_items page=2 per_page=10
+$ qiita create_item < params.json
 ```
