@@ -23,8 +23,10 @@ module Qiita
         HTTP/1.1 %{status}
         %{headers}
       EOS
-      str << "\n" if @show_header && @show_body
-      str << "%{body}" if @show_body
+      if has_body? && @show_body
+        str << "\n" if @show_header
+        str << "%{body}"
+      end
       str
     end
 
@@ -55,7 +57,11 @@ module Qiita
     end
 
     def plain_body
-      JSON.pretty_generate(@response.body) + "\n"
+      if has_body?
+        JSON.pretty_generate(@response.body) + "\n"
+      else
+        ""
+      end
     end
 
     def Rainbow(str)
@@ -64,6 +70,10 @@ module Qiita
       else
         Rainbow::NullPresenter.new(str.to_s)
       end
+    end
+
+    def has_body?
+      @response.body.present?
     end
   end
 end

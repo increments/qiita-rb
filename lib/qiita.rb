@@ -1,3 +1,4 @@
+require "active_support/core_ext/object/blank"
 require "active_support/core_ext/string/inflections"
 require "active_support/core_ext/string/strip"
 require "faraday"
