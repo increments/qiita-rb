@@ -13,7 +13,7 @@ module Qiita
     end
 
     def color
-      !slop_options["no-color"]
+      slop_options["color"]
     end
 
     def error_message
@@ -41,7 +41,7 @@ module Qiita
     end
 
     def show_header
-      !slop_options["no-header"]
+      slop_options["header"]
     end
 
     def valid?
@@ -121,12 +121,12 @@ module Qiita
     def slop_options
       @slop_options ||= Slop.parse!(@argv) do
         banner "Usage: qiita <method> [arguments] [headers|params] [options]"
-        on "a", "access-token=", "Access token"
-        on "h", "help", "Display help message"
         on "H", "host=", "Change API server's host"
-        on "no-color", "Disable coloring output"
+        on "a", "access-token=", "Access token"
+        on "c", "color", "Color output"
+        on "h", "help", "Display help message"
+        on "header", "Show response header"
         on "no-body", "Hide response body"
-        on "no-header", "Hide response header"
       end
     end
   end

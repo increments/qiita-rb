@@ -30,12 +30,12 @@ client.get_user("r7kamura").body
 ```
 $ qiita <method> <arguments> [headers|params] [options]
            |          |          |      |         |
-           |          |          |      |         `-- --access-token, -a
-           |          |          |      |             --help, -h
-           |          |          |      |             --host, -H
-           |          |          |      |             --no-body
-           |          |          |      |             --no-color
-           |          |          |      |             --no-header
+           |          |          |      |         `-- -H, --host
+           |          |          |      |             -a, --access-token
+           |          |          |      |             -c, --color
+           |          |          |      |             -h, --help
+           |          |          |      |                 --header
+           |          |          |      |                 --no-body
            |          |          |      |
            |          |          |      `------------ key=value or key:=value
            |          |          |
