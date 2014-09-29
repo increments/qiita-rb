@@ -64,7 +64,7 @@ $ qiita list_items "Authorization:Bearer 1234567890abcdef1234567890abcdef1234567
 ```
 
 ### Params
-Params are used for query string in GET method, or for request body in other methods
+Params are used for query string in GET method, or for request body in other methods.
 You can set params by `key=value` or `key:=value` syntax.
 `key=value` is parsed into String value,
 while `key:=value` is parsed into JSON value (e.g. key:=17 will be `{"key":17}`).
