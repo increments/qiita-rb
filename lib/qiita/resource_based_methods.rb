@@ -175,6 +175,13 @@ module Qiita
       patch("/api/v2/projects/#{id}", params, headers)
     end
 
+    # ### Qiita::Client#create_rendered_template(params = nil, headers = nil)
+    # 受け取ったテンプレート用文字列の変数を展開して返します。
+    #
+    def create_rendered_template(params = nil, headers = nil)
+      post("/api/v2/rendered_templates", params, headers)
+    end
+
     # ### Qiita::Client#list_tags(params = nil, headers = nil)
     # 全てのタグ一覧を返します。
     #
