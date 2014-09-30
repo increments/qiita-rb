@@ -73,7 +73,7 @@ module Qiita
     end
 
     def has_body?
-      @response.body.present?
+      @response.headers['Content-Length'].to_i > 0
     end
   end
 end
