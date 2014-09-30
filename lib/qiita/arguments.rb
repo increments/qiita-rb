@@ -44,6 +44,10 @@ module Qiita
       slop_options["header"]
     end
 
+    def team
+      slop_options["team"]
+    end
+
     def valid?
       has_valid_slop_options? && has_valid_method_name? && has_valid_arguments? && !has_invalid_json_input?
     end
@@ -127,6 +131,7 @@ module Qiita
         on "h", "help", "Display help message"
         on "header", "Show response header"
         on "no-body", "Hide response body"
+        on "t", "team=", "Team name to be used as subdomain"
       end
     end
   end

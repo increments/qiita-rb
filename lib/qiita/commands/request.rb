@@ -19,7 +19,11 @@ module Qiita
       private
 
       def client
-        Client.new(access_token: @arguments.access_token, host: @arguments.host)
+        Client.new(
+          access_token: @arguments.access_token,
+          host: @arguments.host,
+          team: @arguments.team,
+        )
       end
     end
   end

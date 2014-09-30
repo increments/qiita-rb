@@ -25,16 +25,19 @@ module Qiita
     #
     # * `access_token` - (String) Access token issued to authenticate and authorize user.
     # * `host` - (String) Hostname where this client accesses to.
+    # * `team` - (String) Team name to be used as subdomain.
     #
     # ```rb
     # Qiita::Client.new
     # Qiita::Client.new(access_token: "...")
     # Qiita::Client.new(host: "my-team-name.qiita.com")
+    # Qiita::Client.new(team: "my-team-name")
     # ```
     #
-    def initialize(access_token: nil, host: nil)
+    def initialize(access_token: nil, host: nil, team: nil)
       @access_token = access_token
       @host = host
+      @team = team
     end
 
     # ### Qiita::Client#get(path, params = nil, headers = nil)
@@ -121,7 +124,14 @@ module Qiita
     end
 
     def host
-      @host || DEFAULT_HOST
+      case
+      when @host
+        @host
+      when @team
+        "#{@team}.#{DEFAULT_HOST}"
+      else
+        DEFAULT_HOST
+      end
     end
 
     def process(request_method, path, params, headers)

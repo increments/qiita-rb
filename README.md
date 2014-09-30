@@ -36,6 +36,7 @@ $ qiita <method> <arguments> [headers|params] [options]
            |          |          |      |             -h, --help
            |          |          |      |                 --header
            |          |          |      |                 --no-body
+           |          |          |      |             -t, --team
            |          |          |      |
            |          |          |      `------------ key=value or key:=value
            |          |          |
