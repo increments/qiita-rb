@@ -4,11 +4,13 @@ Creates a new instance of `Qiita::Client` class.
 
 * `access_token` - (String) Access token issued to authenticate and authorize user.
 * `host` - (String) Hostname where this client accesses to.
+* `team` - (String) Team name to be used as subdomain.
 
 ```rb
 Qiita::Client.new
 Qiita::Client.new(access_token: "...")
 Qiita::Client.new(host: "my-team-name.qiita.com")
+Qiita::Client.new(team: "my-team-name")
 ```
 
 ### Qiita::Client#get(path, params = nil, headers = nil)
@@ -63,6 +65,9 @@ client.connection.response :logger
 
 ### Qiita::Client#delete_access_token(token, params = nil, headers = nil)
 与えられたアクセストークンを失効させ、それ以降利用されないようにします。
+
+### Qiita::Client#get_comment(id, params = nil, headers = nil)
+特定のコメントを返します。
 
 ### Qiita::Client#delete_comment(id, params = nil, headers = nil)
 特定のコメントを削除します。
@@ -133,6 +138,9 @@ client.connection.response :logger
 ### Qiita::Client#update_project(id, params = nil, headers = nil)
 特定のプロジェクトを編集します。
 
+### Qiita::Client#create_expanded_template(params = nil, headers = nil)
+受け取ったテンプレート用文字列の変数を展開して返します。
+
 ### Qiita::Client#list_tags(params = nil, headers = nil)
 全てのタグ一覧を返します。
 
@@ -144,6 +152,9 @@ client.connection.response :logger
 
 ### Qiita::Client#list_templates(params = nil, headers = nil)
 全てのテンプレート一覧を返します。
+
+### Qiita::Client#get_template(id, params = nil, headers = nil)
+特定のテンプレートを返します。
 
 ### Qiita::Client#delete_template(id, params = nil, headers = nil)
 特定のテンプレートを削除します。
