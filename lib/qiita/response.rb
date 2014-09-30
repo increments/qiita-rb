@@ -73,12 +73,7 @@ module Qiita
     end
 
     def to_s
-      @to_s ||= begin
-        string = "HTTP/1.1 #{status} #{status_message}\n"
-        string << headers.sort.map {|key, value| "#{key}: #{value}" }.join("\n") << "\n"
-        string << "\n#{body}\n" unless body.empty?
-        string
-      end
+      @to_s ||= ResponseRenderer.new(self, show_body: true, show_header: true).to_s
     end
 
     def status_message
