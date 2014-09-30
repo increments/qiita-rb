@@ -73,7 +73,7 @@ module Qiita
     end
 
     def has_body?
-      @response.headers['Content-Length'].to_i > 0
+      @response.status != 204
     end
   end
 end
