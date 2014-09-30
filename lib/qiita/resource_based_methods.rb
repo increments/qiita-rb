@@ -14,6 +14,13 @@ module Qiita
       delete("/api/v2/access_tokens/#{token}", params, headers)
     end
 
+    # ### Qiita::Client#get_comment(id, params = nil, headers = nil)
+    # 特定のコメントを返します。
+    #
+    def get_comment(id, params = nil, headers = nil)
+      get("/api/v2/comments/#{id}", params, headers)
+    end
+
     # ### Qiita::Client#delete_comment(id, params = nil, headers = nil)
     # 特定のコメントを削除します。
     #
@@ -175,11 +182,11 @@ module Qiita
       patch("/api/v2/projects/#{id}", params, headers)
     end
 
-    # ### Qiita::Client#create_rendered_template(params = nil, headers = nil)
+    # ### Qiita::Client#create_expanded_template(params = nil, headers = nil)
     # 受け取ったテンプレート用文字列の変数を展開して返します。
     #
-    def create_rendered_template(params = nil, headers = nil)
-      post("/api/v2/rendered_templates", params, headers)
+    def create_expanded_template(params = nil, headers = nil)
+      post("/api/v2/expanded_templates", params, headers)
     end
 
     # ### Qiita::Client#list_tags(params = nil, headers = nil)
