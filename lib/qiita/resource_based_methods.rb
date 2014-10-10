@@ -279,5 +279,12 @@ module Qiita
     def list_user_followers(user_id, params = nil, headers = nil)
       get("/api/v2/users/#{user_id}/followers", params, headers)
     end
+
+    # ### Qiita::Client#list_item_stockers(item_id, params = nil, headers = nil)
+    # 特定の投稿をストックしているユーザ一覧を返します。
+    #
+    def list_item_stockers(item_id, params = nil, headers = nil)
+      get("/api/v2/items/#{item_id}/stockers", params, headers)
+    end
   end
 end
