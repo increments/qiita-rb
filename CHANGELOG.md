@@ -1,3 +1,6 @@
+## 1.0.3
+* Escape request URL path
+
 ## 1.0.2
 * Add a new API: list_item_stockers(item_id)
 
