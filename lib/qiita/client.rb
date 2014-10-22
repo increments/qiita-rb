@@ -1,3 +1,4 @@
+require "uri"
 require "qiita/resource_based_methods"
 require "qiita/version"
 
@@ -138,7 +139,7 @@ module Qiita
       Qiita::Response.new(
         connection.send(
           request_method,
-          path,
+          URI.escape(path),
           params,
           headers,
         )

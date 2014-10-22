@@ -251,6 +251,20 @@ describe Qiita::Client do
         should be_a Qiita::Response
       end
     end
+
+    context "with multibyte path" do
+      let(:path) do
+        ""
+      end
+
+      let(:requested_url) do
+        "https://#{requested_host}#{URI.escape(path)}"
+      end
+
+      it "sends request with escaped path" do
+        should be_a Qiita::Response
+      end
+    end
   end
 
   describe "#post" do
