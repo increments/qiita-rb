@@ -1,0 +1,152 @@
+#!/usr/bin/env ruby
+# # script/generate-objc
+# Generates a subclass of AFHTTPSessionManager from given JSON Schema.
+#
+# ## Usage
+# Run this script with a path to JSON Schema of Qiita API v2, available only for staff.
+#
+# ```sh
+# bundle exec ./script/generate-objc [-h|-m] INCQiitaSessionManager /path/to/json/schema > INCQiitaSessionManager.[h|m]
+# ```
+#
+require "active_support/core_ext/object/try"
+require "active_support/core_ext/string/indent"
+require "active_support/core_ext/string/inflections"
+require "active_support/core_ext/string/strip"
+require "json_schema"
+require "optparse"
+require "ostruct"
+require "yaml"
+
+# View object class to generate String representation of each method.
+method_class = Class.new(OpenStruct) do
+  def to_s
+    if header?
+      <<-EOS.strip_heredoc
+        /// #{description}
+        #{return_type_marker}#{wrapped_method_signature(return_type_marker.length).indent(8).strip};
+      EOS
+    else
+      <<-EOS.strip_heredoc
+        #{return_type_marker}#{wrapped_method_signature(return_type_marker.length).indent(8).strip} {
+            NSString *path = [NSString stringWithFormat:#{path_format_and_arguments}];
+            return [self #{request_method}:path parameters:parameters success:success failure:failure];
+        }
+      EOS
+    end
+  end
+
+  private
+
+  def return_type_marker
+    "- (NSURLSessionDataTask *)"
+  end
+
+  def wrapped_method_signature(offset)
+    components = method_signature.split(/ (?=[0-9A-Za-z_]+:)/)
+    colon_position = offset + components[0].index(":")
+    aligned = [components[0]]
+    components[1..-1].each do |component|
+      aligned << " " * (colon_position - component.index(":")) + component
+    end
+    aligned.join("\n")
+  end
+
+  def method_signature
+    camelize_objcish(method_name) + with_arguments
+  end
+
+  def with_arguments
+    arguments = required_argument_names.map {|name|
+      camelize_objcish(name) + ":(NSString *)" + camelize_objcish(name)
+    }
+    arguments << "parameters:(NSDictionary *)parameters"
+    arguments << "success:(void (^)(NSURLSessionDataTask *task, id responseObject))success"
+    arguments << "failure:(void (^)(NSURLSessionDataTask *task, NSError *error))failure"
+    "With" + upcase_first(arguments.join(" "))
+  end
+
+  def camelize_objcish(name)
+    name = name.split(/_/).map {|component|
+      case component
+      when "id" then "i_d" # to camelize into "ID"
+      else component
+      end
+    }.join("_")
+    name =~ /^i_d/ ? name.camelize : name.camelize(:lower)
+  end
+
+  def upcase_first(s)
+    s[0].upcase + s[1..-1]
+  end
+
+  def path_format_and_arguments
+    placeholder_pattern = %r<{\(.*/([^/]+)\)}>
+    format = %Q<@"#{href.gsub(placeholder_pattern, '%@')}">
+    keys = href.scan(placeholder_pattern).flatten
+    arguments = keys.map {|key| camelize_objcish(key) }
+    ([format] + arguments).join(", ")
+  end
+
+  def path
+    ?" + href.gsub(%r<{\(.*/([^/]+)\)}>, '#{\1}') + ?"
+  end
+
+  def header?
+    _generates_header
+  end
+end
+
+opt = OptionParser.new
+opt.on("-h CLASS") {|c| $class_name = c; $generates_header = true }
+opt.on("-m CLASS") {|c| $class_name = c; $generates_header = false }
+opt.parse!(ARGV)
+unless $class_name
+  abort "Neither -h nor -m given. Aborted."
+end
+path_to_json_schema = ARGV[0]
+hash = YAML.load_file(path_to_json_schema)
+schema = JsonSchema.parse!(hash).tap(&:expand_references!)
+links = schema.properties.values.map(&:links).flatten
+methods = links.map do |link|
+  method_class.new(
+    _generates_header: $generates_header,
+    available_parameters: (link.schema.try(:properties) || {}).map do |name, property|
+      {
+        description: property.description,
+        name: name,
+        type: property.type,
+      }
+    end,
+    description: link.description,
+    href: link.href,
+    method_name: link.title,
+    request_method: link.method.upcase,
+    required_argument_names: link.href.scan(%r<{\(.*/([^/]+)\)}>).flatten,
+  )
+end
+if $generates_header
+  puts <<-EOS.strip_heredoc
+    #import <AFNetworking/AFHTTPSessionManager.h>
+
+    @interface #{$class_name} : AFHTTPSessionManager
+
+    #{methods.join("\n").indent(4).strip}
+
+    @end
+  EOS
+else
+  puts <<-EOS.strip_heredoc
+    #import "#{$class_name}.h"
+
+    @implementation #{$class_name}
+
+    + (instancetype)manager {
+        return [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:@"https://qiita.com"]];
+    }
+
+    #{methods.join("\n").indent(4).strip}
+
+    @end
+  EOS
+end
