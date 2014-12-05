@@ -210,6 +210,13 @@ module Qiita
       get("/api/v2/users/#{user_id}/following_tags", params, headers)
     end
 
+    # ### Qiita::Client#list_teams(params = nil, headers = nil)
+    # 現在のリクエストで認証されているユーザが所属している全てのチームを返します。
+    #
+    def list_teams(params = nil, headers = nil)
+      get("/api/v2/teams", params, headers)
+    end
+
     # ### Qiita::Client#list_templates(params = nil, headers = nil)
     # 全てのテンプレート一覧を返します。
     #
