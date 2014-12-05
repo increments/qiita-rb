@@ -1,3 +1,6 @@
+## 1.0.4
+* Add list_teams method
+
 ## 1.0.3
 * Escape request URL path
 
