@@ -119,6 +119,13 @@ module Qiita
       get("/api/v2/users/#{user_id}/stocks", params, headers)
     end
 
+    # ### Qiita::Client#get_item_stock(item_id, params = nil, headers = nil)
+    # 特定の投稿をストックしている場合に204を返します。
+    #
+    def get_item_stock(item_id, params = nil, headers = nil)
+      get("/api/v2/items/#{item_id}/stock", params, headers)
+    end
+
     # ### Qiita::Client#stock_item(item_id, params = nil, headers = nil)
     # 特定の投稿をストックします。
     #
@@ -210,6 +217,27 @@ module Qiita
       get("/api/v2/users/#{user_id}/following_tags", params, headers)
     end
 
+    # ### Qiita::Client#get_tag_following(id, params = nil, headers = nil)
+    # 特定のタグをフォローしている場合に204を返します。
+    #
+    def get_tag_following(id, params = nil, headers = nil)
+      get("/api/v2/tags/#{id}/following", params, headers)
+    end
+
+    # ### Qiita::Client#follow_tag(id, params = nil, headers = nil)
+    # 特定のタグをフォローします。
+    #
+    def follow_tag(id, params = nil, headers = nil)
+      put("/api/v2/tags/#{id}/following", params, headers)
+    end
+
+    # ### Qiita::Client#unfollow_tag(id, params = nil, headers = nil)
+    # 特定のタグへのフォローを解除します。
+    #
+    def unfollow_tag(id, params = nil, headers = nil)
+      delete("/api/v2/tags/#{id}/following", params, headers)
+    end
+
     # ### Qiita::Client#list_teams(params = nil, headers = nil)
     # 現在のリクエストで認証されているユーザが所属している全てのチームを返します。
     #
@@ -292,6 +320,27 @@ module Qiita
     #
     def list_item_stockers(item_id, params = nil, headers = nil)
       get("/api/v2/items/#{item_id}/stockers", params, headers)
+    end
+
+    # ### Qiita::Client#get_user_following(user_id, params = nil, headers = nil)
+    # 特定のユーザをフォローしている場合に204を返します。
+    #
+    def get_user_following(user_id, params = nil, headers = nil)
+      get("/api/v2/users/#{user_id}/following", params, headers)
+    end
+
+    # ### Qiita::Client#follow_user(user_id, params = nil, headers = nil)
+    # 特定のユーザをフォローします。
+    #
+    def follow_user(user_id, params = nil, headers = nil)
+      put("/api/v2/users/#{user_id}/following", params, headers)
+    end
+
+    # ### Qiita::Client#unfollow_user(user_id, params = nil, headers = nil)
+    # 特定のユーザへのフォローを外します。
+    #
+    def unfollow_user(user_id, params = nil, headers = nil)
+      delete("/api/v2/users/#{user_id}/following", params, headers)
     end
   end
 end
