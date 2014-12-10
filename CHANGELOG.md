@@ -1,14 +1,17 @@
+## 1.0.5
+- Add client methods about following, LGTM, and stock
+
 ## 1.0.4
-* Add list_teams method
+- Add list_teams method
 
 ## 1.0.3
-* Escape request URL path
+- Escape request URL path
 
 ## 1.0.2
-* Add a new API: list_item_stockers(item_id)
+- Add a new API: list_item_stockers(item_id)
 
 ## 1.0.1
-* Fix response body existence check logic
+- Fix response body existence check logic
 
 ## 1.0.0
-* Support Qiita API v2
+- Support Qiita API v2
