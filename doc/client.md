@@ -111,6 +111,9 @@ client.connection.response :logger
 ### Qiita::Client#list_user_stocks(user_id, params = nil, headers = nil)
 特定のユーザがストックした投稿一覧を返します。
 
+### Qiita::Client#get_item_stock(item_id, params = nil, headers = nil)
+特定の投稿をストックしている場合に204を返します。
+
 ### Qiita::Client#stock_item(item_id, params = nil, headers = nil)
 特定の投稿をストックします。
 
@@ -150,6 +153,18 @@ client.connection.response :logger
 ### Qiita::Client#list_user_following_tags(user_id, params = nil, headers = nil)
 特定のユーザがフォローしているタグ一覧を返します。
 
+### Qiita::Client#get_tag_following(id, params = nil, headers = nil)
+特定のタグをフォローしている場合に204を返します。
+
+### Qiita::Client#follow_tag(id, params = nil, headers = nil)
+特定のタグをフォローします。
+
+### Qiita::Client#unfollow_tag(id, params = nil, headers = nil)
+特定のタグへのフォローを解除します。
+
+### Qiita::Client#list_teams(params = nil, headers = nil)
+現在のリクエストで認証されているユーザが所属している全てのチームを返します。
+
 ### Qiita::Client#list_templates(params = nil, headers = nil)
 全てのテンプレート一覧を返します。
 
@@ -179,4 +194,16 @@ client.connection.response :logger
 
 ### Qiita::Client#list_user_followers(user_id, params = nil, headers = nil)
 特定のユーザをフォローしているユーザ一覧を返します。
+
+### Qiita::Client#list_item_stockers(item_id, params = nil, headers = nil)
+特定の投稿をストックしているユーザ一覧を返します。
+
+### Qiita::Client#get_user_following(user_id, params = nil, headers = nil)
+特定のユーザをフォローしている場合に204を返します。
+
+### Qiita::Client#follow_user(user_id, params = nil, headers = nil)
+特定のユーザをフォローします。
+
+### Qiita::Client#unfollow_user(user_id, params = nil, headers = nil)
+特定のユーザへのフォローを外します。
 
