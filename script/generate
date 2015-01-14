@@ -40,7 +40,7 @@ method_class = Class.new(OpenStruct) do
   end
 
   def path
-    ?" + href.gsub(%r<{\(.*/([^/]+)\)}>, '#{\1}') + ?"
+    ?" + href.gsub(%r<{\((.+?)\)}>) { '#{' + $1.split("/").last + "}" } + ?"
   end
 end
 
@@ -61,7 +61,9 @@ methods = links.map do |link|
     href: link.href,
     method_name: link.title,
     request_method: link.method.downcase,
-    required_argument_names: link.href.scan(%r<{\(.*/([^/]+)\)}>).flatten,
+    required_argument_names: link.href.scan(%r<{\((.+?)\)}>).flatten.map do |element|
+      element.split("/").last
+    end,
   )
 end
 
