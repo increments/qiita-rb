@@ -90,6 +90,9 @@ client.connection.response :logger
 ### Qiita::Client#list_items(params = nil, headers = nil)
 投稿の一覧を返します。
 
+### Qiita::Client#list_authenticated_user_items(params = nil, headers = nil)
+認証中のユーザの投稿の一覧を返します。
+
 ### Qiita::Client#create_item(params = nil, headers = nil)
 新たに投稿を作成します。
 
