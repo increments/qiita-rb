@@ -1,3 +1,6 @@
+## 1.0.7
+- Add list_authenticated_user_items method
+
 ## 1.0.6
 - Add create_tagging and delete_tagging methods
 
