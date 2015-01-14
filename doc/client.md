@@ -88,7 +88,7 @@ client.connection.response :logger
 特定のコメントからThankを外します。
 
 ### Qiita::Client#list_items(params = nil, headers = nil)
-新着順に全ての投稿一覧を返します。
+投稿の一覧を返します。
 
 ### Qiita::Client#create_item(params = nil, headers = nil)
 新たに投稿を作成します。
@@ -161,6 +161,12 @@ client.connection.response :logger
 
 ### Qiita::Client#unfollow_tag(id, params = nil, headers = nil)
 特定のタグへのフォローを解除します。
+
+### Qiita::Client#create_tagging(item_id, params = nil, headers = nil)
+投稿にタグを追加します。Qiita:Teamでのみ有効です。
+
+### Qiita::Client#delete_tagging(item_id, name, params = nil, headers = nil)
+投稿から指定されたタグを取り除きます。Qiita:Teamでのみ有効です。
 
 ### Qiita::Client#list_teams(params = nil, headers = nil)
 現在のリクエストで認証されているユーザが所属している全てのチームを返します。
