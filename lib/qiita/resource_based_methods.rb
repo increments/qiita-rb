@@ -64,7 +64,7 @@ module Qiita
     end
 
     # ### Qiita::Client#list_items(params = nil, headers = nil)
-    # 新着順に全ての投稿一覧を返します。
+    # 投稿の一覧を返します。
     #
     def list_items(params = nil, headers = nil)
       get("/api/v2/items", params, headers)
@@ -236,6 +236,20 @@ module Qiita
     #
     def unfollow_tag(id, params = nil, headers = nil)
       delete("/api/v2/tags/#{id}/following", params, headers)
+    end
+
+    # ### Qiita::Client#create_tagging(item_id, params = nil, headers = nil)
+    # 投稿にタグを追加します。Qiita:Teamでのみ有効です。
+    #
+    def create_tagging(item_id, params = nil, headers = nil)
+      post("/api/v2/items/#{item_id}/taggings", params, headers)
+    end
+
+    # ### Qiita::Client#delete_tagging(item_id, name, params = nil, headers = nil)
+    # 投稿から指定されたタグを取り除きます。Qiita:Teamでのみ有効です。
+    #
+    def delete_tagging(item_id, name, params = nil, headers = nil)
+      delete("/api/v2/items/#{item_id}/taggings/#{name}", params, headers)
     end
 
     # ### Qiita::Client#list_teams(params = nil, headers = nil)
