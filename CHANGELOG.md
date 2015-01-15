@@ -1,3 +1,6 @@
+## 1.1.0
+- Add --no-ssl-verification option
+
 ## 1.0.7
 - Add list_authenticated_user_items method
 
