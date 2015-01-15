@@ -28,6 +28,10 @@ module Qiita
       slop_options["host"]
     end
 
+    def ssl
+      !slop_options["no-ssl-verification"]
+    end
+
     def method_name
       ARGV[0]
     end
@@ -131,6 +135,7 @@ module Qiita
         on "h", "help", "Display help message"
         on "header", "Show response header"
         on "no-body", "Hide response body"
+        on "no-ssl-verification", "Ignore SSL verification"
         on "t", "team=", "Team name to be used as subdomain"
       end
     end

@@ -22,6 +22,7 @@ module Qiita
         Client.new(
           access_token: @arguments.access_token,
           host: @arguments.host,
+          ssl: @arguments.ssl,
           team: @arguments.team,
         )
       end

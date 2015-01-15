@@ -26,6 +26,7 @@ module Qiita
     #
     # * `access_token` - (String) Access token issued to authenticate and authorize user.
     # * `host` - (String) Hostname where this client accesses to.
+    # * `ssl` - (Boolean) Use SSL verification. (default: true)
     # * `team` - (String) Team name to be used as subdomain.
     #
     # ```rb
@@ -35,9 +36,10 @@ module Qiita
     # Qiita::Client.new(team: "my-team-name")
     # ```
     #
-    def initialize(access_token: nil, host: nil, team: nil)
+    def initialize(access_token: nil, host: nil, ssl: true, team: nil)
       @access_token = access_token
       @host = host
+      @ssl = ssl
       @team = team
     end
 
@@ -109,7 +111,7 @@ module Qiita
     # ```
     #
     def connection
-      @connection ||= Faraday.new(headers: default_headers, url: url_prefix) do |connection|
+      @connection ||= Faraday.new(faraday_client_options) do |connection|
         connection.request :json
         connection.response :json
         connection.adapter Faraday.default_adapter
@@ -122,6 +124,16 @@ module Qiita
       headers = DEFAULT_HEADERS.clone
       headers["Authorization"] = "Bearer #{@access_token}" if @access_token
       headers
+    end
+
+    def faraday_client_options
+      {
+        headers: default_headers,
+        ssl: {
+          verify: @ssl,
+        },
+        url: url_prefix,
+      }
     end
 
     def host

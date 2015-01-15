@@ -4,6 +4,7 @@ Creates a new instance of `Qiita::Client` class.
 
 * `access_token` - (String) Access token issued to authenticate and authorize user.
 * `host` - (String) Hostname where this client accesses to.
+* `ssl` - (Boolean) Use SSL verification. (default: true)
 * `team` - (String) Team name to be used as subdomain.
 
 ```rb
