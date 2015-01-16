@@ -120,6 +120,10 @@ module Qiita
 
     private
 
+    def base_host
+      @host || DEFAULT_HOST
+    end
+
     def default_headers
       headers = DEFAULT_HEADERS.clone
       headers["Authorization"] = "Bearer #{@access_token}" if @access_token
@@ -137,13 +141,10 @@ module Qiita
     end
 
     def host
-      case
-      when @host
-        @host
-      when @team
-        "#{@team}.#{DEFAULT_HOST}"
+      if @team
+        "#{@team}.#{base_host}"
       else
-        DEFAULT_HOST
+        base_host
       end
     end
 

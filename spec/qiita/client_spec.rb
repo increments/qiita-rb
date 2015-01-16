@@ -203,6 +203,29 @@ describe Qiita::Client do
       end
     end
 
+    context "with :host and :team options" do
+      before do
+        options[:host] = host
+        options[:team] = team
+      end
+
+      let(:host) do
+        "example.com"
+      end
+
+      let(:team) do
+        "test"
+      end
+
+      let(:requested_host) do
+        [team, host].join(".")
+      end
+
+      it "sends request to configured host including team as subdomain" do
+        should be_a Qiita::Response
+      end
+    end
+
     context "with a Qiita::Client created with :access_token option" do
       before do
         options[:access_token] = access_token
