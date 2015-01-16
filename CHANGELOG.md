@@ -1,3 +1,6 @@
+## 1.1.1
+- Support --host with --team option
+
 ## 1.1.0
 - Add --no-ssl-verification option
 
