@@ -1,3 +1,6 @@
+## 1.1.2
+- Slop v4 is not supported for now
+
 ## 1.1.1
 - Support --host with --team option
 
