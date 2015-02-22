@@ -45,7 +45,7 @@ module Qiita
     # Returns previous page URL or nil.
     #
     def previous_page_url
-      links_table["previous"]
+      links_table["prev"]
     end
 
     # ### Qiita::Response#headers
