@@ -36,7 +36,7 @@ module Qiita
     end
 
     # ### Qiita::Client#list_item_comments(item_id, params = nil, headers = nil)
-    # 特定の投稿に寄せられたコメント一覧を返します。
+    # 特定の投稿に寄せられたコメント一覧を作成日時の降順で返します。
     #
     def list_item_comments(item_id, params = nil, headers = nil)
       get("/api/v2/items/#{item_id}/comments", params, headers)
@@ -64,14 +64,14 @@ module Qiita
     end
 
     # ### Qiita::Client#list_items(params = nil, headers = nil)
-    # 投稿の一覧を返します。
+    # 投稿の一覧を作成日時の降順で返します。
     #
     def list_items(params = nil, headers = nil)
       get("/api/v2/items", params, headers)
     end
 
     # ### Qiita::Client#list_authenticated_user_items(params = nil, headers = nil)
-    # 認証中のユーザの投稿の一覧を返します。
+    # 認証中のユーザの投稿の一覧を作成日時の降順で返します。
     #
     def list_authenticated_user_items(params = nil, headers = nil)
       get("/api/v2/authenticated_user/items", params, headers)
@@ -106,21 +106,21 @@ module Qiita
     end
 
     # ### Qiita::Client#list_tag_items(id, params = nil, headers = nil)
-    # 特定のタグが付けられた投稿一覧を返します。
+    # 特定のタグが付けられた投稿一覧を、タグを付けた日時の降順で返します。
     #
     def list_tag_items(id, params = nil, headers = nil)
       get("/api/v2/tags/#{id}/items", params, headers)
     end
 
     # ### Qiita::Client#list_user_items(user_id, params = nil, headers = nil)
-    # 特定のユーザの投稿一覧を返します。
+    # 特定のユーザの投稿一覧を作成日時の降順で返します。
     #
     def list_user_items(user_id, params = nil, headers = nil)
       get("/api/v2/users/#{user_id}/items", params, headers)
     end
 
     # ### Qiita::Client#list_user_stocks(user_id, params = nil, headers = nil)
-    # 特定のユーザがストックした投稿一覧を返します。
+    # 特定のユーザがストックした投稿一覧をストックした日時の降順で返します。
     #
     def list_user_stocks(user_id, params = nil, headers = nil)
       get("/api/v2/users/#{user_id}/stocks", params, headers)
@@ -147,22 +147,22 @@ module Qiita
       delete("/api/v2/items/#{item_id}/stock", params, headers)
     end
 
-    # ### Qiita::Client#lgtm_item(item_id, params = nil, headers = nil)
-    # 特定の投稿に「いいね！」を付けます。
+    # ### Qiita::Client#like_item(item_id, params = nil, headers = nil)
+    # 特定の投稿に「いいね！」を付けます。Qiita:Teamでのみ有効です。
     #
-    def lgtm_item(item_id, params = nil, headers = nil)
-      put("/api/v2/items/#{item_id}/lgtm", params, headers)
+    def like_item(item_id, params = nil, headers = nil)
+      put("/api/v2/items/#{item_id}/like", params, headers)
     end
 
-    # ### Qiita::Client#unlgtm_item(item_id, params = nil, headers = nil)
-    # 特定の投稿への「いいね！」を取り消します。
+    # ### Qiita::Client#unlike_item(item_id, params = nil, headers = nil)
+    # 特定の投稿への「いいね！」を取り消します。Qiita:Teamでのみ有効です。
     #
-    def unlgtm_item(item_id, params = nil, headers = nil)
-      delete("/api/v2/items/#{item_id}/lgtm", params, headers)
+    def unlike_item(item_id, params = nil, headers = nil)
+      delete("/api/v2/items/#{item_id}/like", params, headers)
     end
 
     # ### Qiita::Client#list_projects(params = nil, headers = nil)
-    # チーム内に存在するプロジェクト一覧を返します。
+    # チーム内に存在するプロジェクト一覧をプロジェクト作成日時の降順で返します。
     #
     def list_projects(params = nil, headers = nil)
       get("/api/v2/projects", params, headers)
@@ -204,7 +204,7 @@ module Qiita
     end
 
     # ### Qiita::Client#list_tags(params = nil, headers = nil)
-    # 全てのタグ一覧を返します。
+    # 全てのタグ一覧をタグ作成日時の降順で返します。
     #
     def list_tags(params = nil, headers = nil)
       get("/api/v2/tags", params, headers)
@@ -218,7 +218,7 @@ module Qiita
     end
 
     # ### Qiita::Client#list_user_following_tags(user_id, params = nil, headers = nil)
-    # 特定のユーザがフォローしているタグ一覧を返します。
+    # 特定のユーザがフォローしているタグ一覧をフォローした日時の降順で返します。
     #
     def list_user_following_tags(user_id, params = nil, headers = nil)
       get("/api/v2/users/#{user_id}/following_tags", params, headers)
@@ -260,14 +260,14 @@ module Qiita
     end
 
     # ### Qiita::Client#list_teams(params = nil, headers = nil)
-    # 現在のリクエストで認証されているユーザが所属している全てのチームを返します。
+    # 現在のリクエストで認証されているユーザが所属している全てのチームを、チーム作成日時の降順で返します。
     #
     def list_teams(params = nil, headers = nil)
       get("/api/v2/teams", params, headers)
     end
 
     # ### Qiita::Client#list_templates(params = nil, headers = nil)
-    # 全てのテンプレート一覧を返します。
+    # そのチームに存在するテンプレート一覧を返します。
     #
     def list_templates(params = nil, headers = nil)
       get("/api/v2/templates", params, headers)
@@ -302,7 +302,7 @@ module Qiita
     end
 
     # ### Qiita::Client#list_users(params = nil, headers = nil)
-    # 全てのユーザの一覧を返します。
+    # 全てのユーザの一覧を作成日時の降順で返します。
     #
     def list_users(params = nil, headers = nil)
       get("/api/v2/users", params, headers)
@@ -337,7 +337,7 @@ module Qiita
     end
 
     # ### Qiita::Client#list_item_stockers(item_id, params = nil, headers = nil)
-    # 特定の投稿をストックしているユーザ一覧を返します。
+    # 特定の投稿をストックしているユーザ一覧を、ストックした日時の降順で返します。
     #
     def list_item_stockers(item_id, params = nil, headers = nil)
       get("/api/v2/items/#{item_id}/stockers", params, headers)

@@ -77,7 +77,7 @@ client.connection.response :logger
 特定のコメントを更新します。
 
 ### Qiita::Client#list_item_comments(item_id, params = nil, headers = nil)
-特定の投稿に寄せられたコメント一覧を返します。
+特定の投稿に寄せられたコメント一覧を作成日時の降順で返します。
 
 ### Qiita::Client#create_item_comment(item_id, params = nil, headers = nil)
 特定の投稿にコメントを付けます。
@@ -89,10 +89,10 @@ client.connection.response :logger
 特定のコメントからThankを外します。
 
 ### Qiita::Client#list_items(params = nil, headers = nil)
-投稿の一覧を返します。
+投稿の一覧を作成日時の降順で返します。
 
 ### Qiita::Client#list_authenticated_user_items(params = nil, headers = nil)
-認証中のユーザの投稿の一覧を返します。
+認証中のユーザの投稿の一覧を作成日時の降順で返します。
 
 ### Qiita::Client#create_item(params = nil, headers = nil)
 新たに投稿を作成します。
@@ -107,13 +107,13 @@ client.connection.response :logger
 特定の投稿を削除します。
 
 ### Qiita::Client#list_tag_items(id, params = nil, headers = nil)
-特定のタグが付けられた投稿一覧を返します。
+特定のタグが付けられた投稿一覧を、タグを付けた日時の降順で返します。
 
 ### Qiita::Client#list_user_items(user_id, params = nil, headers = nil)
-特定のユーザの投稿一覧を返します。
+特定のユーザの投稿一覧を作成日時の降順で返します。
 
 ### Qiita::Client#list_user_stocks(user_id, params = nil, headers = nil)
-特定のユーザがストックした投稿一覧を返します。
+特定のユーザがストックした投稿一覧をストックした日時の降順で返します。
 
 ### Qiita::Client#get_item_stock(item_id, params = nil, headers = nil)
 特定の投稿をストックしている場合に204を返します。
@@ -124,14 +124,14 @@ client.connection.response :logger
 ### Qiita::Client#unstock_item(item_id, params = nil, headers = nil)
 特定の投稿をストックから取り除きます。
 
-### Qiita::Client#lgtm_item(item_id, params = nil, headers = nil)
-特定の投稿に「いいね！」を付けます。
+### Qiita::Client#like_item(item_id, params = nil, headers = nil)
+特定の投稿に「いいね！」を付けます。Qiita:Teamでのみ有効です。
 
-### Qiita::Client#unlgtm_item(item_id, params = nil, headers = nil)
-特定の投稿への「いいね！」を取り消します。
+### Qiita::Client#unlike_item(item_id, params = nil, headers = nil)
+特定の投稿への「いいね！」を取り消します。Qiita:Teamでのみ有効です。
 
 ### Qiita::Client#list_projects(params = nil, headers = nil)
-チーム内に存在するプロジェクト一覧を返します。
+チーム内に存在するプロジェクト一覧をプロジェクト作成日時の降順で返します。
 
 ### Qiita::Client#get_project(id, params = nil, headers = nil)
 特定のプロジェクトを返します。
@@ -149,13 +149,13 @@ client.connection.response :logger
 受け取ったテンプレート用文字列の変数を展開して返します。
 
 ### Qiita::Client#list_tags(params = nil, headers = nil)
-全てのタグ一覧を返します。
+全てのタグ一覧をタグ作成日時の降順で返します。
 
 ### Qiita::Client#get_tag(id, params = nil, headers = nil)
 特定のタグを返します。
 
 ### Qiita::Client#list_user_following_tags(user_id, params = nil, headers = nil)
-特定のユーザがフォローしているタグ一覧を返します。
+特定のユーザがフォローしているタグ一覧をフォローした日時の降順で返します。
 
 ### Qiita::Client#get_tag_following(id, params = nil, headers = nil)
 特定のタグをフォローしている場合に204を返します。
@@ -173,10 +173,10 @@ client.connection.response :logger
 投稿から指定されたタグを取り除きます。Qiita:Teamでのみ有効です。
 
 ### Qiita::Client#list_teams(params = nil, headers = nil)
-現在のリクエストで認証されているユーザが所属している全てのチームを返します。
+現在のリクエストで認証されているユーザが所属している全てのチームを、チーム作成日時の降順で返します。
 
 ### Qiita::Client#list_templates(params = nil, headers = nil)
-全てのテンプレート一覧を返します。
+そのチームに存在するテンプレート一覧を返します。
 
 ### Qiita::Client#get_template(id, params = nil, headers = nil)
 特定のテンプレートを返します。
@@ -191,7 +191,7 @@ client.connection.response :logger
 特定のテンプレートを編集します。
 
 ### Qiita::Client#list_users(params = nil, headers = nil)
-全てのユーザの一覧を返します。
+全てのユーザの一覧を作成日時の降順で返します。
 
 ### Qiita::Client#get_user(id, params = nil, headers = nil)
 特定のユーザを返します。
@@ -206,7 +206,7 @@ client.connection.response :logger
 特定のユーザをフォローしているユーザ一覧を返します。
 
 ### Qiita::Client#list_item_stockers(item_id, params = nil, headers = nil)
-特定の投稿をストックしているユーザ一覧を返します。
+特定の投稿をストックしているユーザ一覧を、ストックした日時の降順で返します。
 
 ### Qiita::Client#get_user_following(user_id, params = nil, headers = nil)
 特定のユーザをフォローしている場合に204を返します。
