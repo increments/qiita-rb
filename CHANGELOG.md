@@ -1,3 +1,6 @@
+## 1.2.0
+- Update method names and docs about likes API
+
 ## 1.1.2
 - Slop v4 is not supported for now
 
