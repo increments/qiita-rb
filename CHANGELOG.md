@@ -1,3 +1,6 @@
+## 1.3.0
+- Update methods and their descriptions
+
 ## 1.2.0
 - Update method names and docs about likes API
 
