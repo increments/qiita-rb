@@ -1,367 +1,374 @@
 module Qiita
   module ResourceBasedMethods
     # ### Qiita::Client#create_access_token(params = nil, headers = nil)
-    # 与えられた認証情報をもとに新しいアクセストークンを発行します。
+    # Create a new access token.
     #
     def create_access_token(params = nil, headers = nil)
       post("/api/v2/access_tokens", params, headers)
     end
 
-    # ### Qiita::Client#delete_access_token(token, params = nil, headers = nil)
-    # 与えられたアクセストークンを失効させ、それ以降利用されないようにします。
+    # ### Qiita::Client#delete_access_token(params = nil, headers = nil)
+    # Deactivate an access token.
     #
-    def delete_access_token(token, params = nil, headers = nil)
-      delete("/api/v2/access_tokens/#{token}", params, headers)
+    def delete_access_token(params = nil, headers = nil)
+      delete("/api/v2/access_tokens/:access_token", params, headers)
     end
 
-    # ### Qiita::Client#get_comment(id, params = nil, headers = nil)
-    # 特定のコメントを返します。
+    # ### Qiita::Client#get_authenticated_user(params = nil, headers = nil)
+    # Get a user associated to the current access token.
     #
-    def get_comment(id, params = nil, headers = nil)
-      get("/api/v2/comments/#{id}", params, headers)
+    def get_authenticated_user(params = nil, headers = nil)
+      get("/api/v2/authenticated_user", params, headers)
     end
 
-    # ### Qiita::Client#delete_comment(id, params = nil, headers = nil)
-    # 特定のコメントを削除します。
+    # ### Qiita::Client#delete_comment(params = nil, headers = nil)
+    # Delete a comment.
     #
-    def delete_comment(id, params = nil, headers = nil)
-      delete("/api/v2/comments/#{id}", params, headers)
+    def delete_comment(params = nil, headers = nil)
+      delete("/api/v2/comments/:comment_id", params, headers)
     end
 
-    # ### Qiita::Client#update_comment(id, params = nil, headers = nil)
-    # 特定のコメントを更新します。
+    # ### Qiita::Client#get_comment(params = nil, headers = nil)
+    # Get a comment.
     #
-    def update_comment(id, params = nil, headers = nil)
-      patch("/api/v2/comments/#{id}", params, headers)
+    def get_comment(params = nil, headers = nil)
+      get("/api/v2/comments/:comment_id", params, headers)
     end
 
-    # ### Qiita::Client#list_item_comments(item_id, params = nil, headers = nil)
-    # 特定の投稿に寄せられたコメント一覧を作成日時の降順で返します。
+    # ### Qiita::Client#update_comment(params = nil, headers = nil)
+    # Update a comment.
     #
-    def list_item_comments(item_id, params = nil, headers = nil)
-      get("/api/v2/items/#{item_id}/comments", params, headers)
+    def update_comment(params = nil, headers = nil)
+      patch("/api/v2/comments/:comment_id", params, headers)
     end
 
-    # ### Qiita::Client#create_item_comment(item_id, params = nil, headers = nil)
-    # 特定の投稿にコメントを付けます。
+    # ### Qiita::Client#unthank_comment(params = nil, headers = nil)
+    # Delete a thank from a comment.
     #
-    def create_item_comment(item_id, params = nil, headers = nil)
-      post("/api/v2/items/#{item_id}/comments", params, headers)
+    def unthank_comment(params = nil, headers = nil)
+      delete("/api/v2/comments/:comment_id/thank", params, headers)
     end
 
-    # ### Qiita::Client#thank_comment(comment_id, params = nil, headers = nil)
-    # 特定のコメントにThankを付けます。
+    # ### Qiita::Client#thank_comment(params = nil, headers = nil)
+    # Send a thank to a comment.
     #
-    def thank_comment(comment_id, params = nil, headers = nil)
-      put("/api/v2/comments/#{comment_id}/thank", params, headers)
+    def thank_comment(params = nil, headers = nil)
+      put("/api/v2/comments/:comment_id/thank", params, headers)
     end
 
-    # ### Qiita::Client#unthank_comment(comment_id, params = nil, headers = nil)
-    # 特定のコメントからThankを外します。
+    # ### Qiita::Client#list_item_comments(params = nil, headers = nil)
+    # List comments on an item in newest order.
     #
-    def unthank_comment(comment_id, params = nil, headers = nil)
-      delete("/api/v2/comments/#{comment_id}/thank", params, headers)
+    def list_item_comments(params = nil, headers = nil)
+      post("/api/v2/items/:item_id/comments", params, headers)
     end
 
-    # ### Qiita::Client#list_items(params = nil, headers = nil)
-    # 投稿の一覧を作成日時の降順で返します。
+    # ### Qiita::Client#create_item_comment(params = nil, headers = nil)
+    # Post a comment on an item.
     #
-    def list_items(params = nil, headers = nil)
-      get("/api/v2/items", params, headers)
-    end
-
-    # ### Qiita::Client#list_authenticated_user_items(params = nil, headers = nil)
-    # 認証中のユーザの投稿の一覧を作成日時の降順で返します。
-    #
-    def list_authenticated_user_items(params = nil, headers = nil)
-      get("/api/v2/authenticated_user/items", params, headers)
-    end
-
-    # ### Qiita::Client#create_item(params = nil, headers = nil)
-    # 新たに投稿を作成します。
-    #
-    def create_item(params = nil, headers = nil)
-      post("/api/v2/items", params, headers)
-    end
-
-    # ### Qiita::Client#get_item(id, params = nil, headers = nil)
-    # 特定の投稿を返します。
-    #
-    def get_item(id, params = nil, headers = nil)
-      get("/api/v2/items/#{id}", params, headers)
-    end
-
-    # ### Qiita::Client#update_item(id, params = nil, headers = nil)
-    # 特定の投稿を編集します。
-    #
-    def update_item(id, params = nil, headers = nil)
-      patch("/api/v2/items/#{id}", params, headers)
-    end
-
-    # ### Qiita::Client#delete_item(id, params = nil, headers = nil)
-    # 特定の投稿を削除します。
-    #
-    def delete_item(id, params = nil, headers = nil)
-      delete("/api/v2/items/#{id}", params, headers)
-    end
-
-    # ### Qiita::Client#list_tag_items(id, params = nil, headers = nil)
-    # 特定のタグが付けられた投稿一覧を、タグを付けた日時の降順で返します。
-    #
-    def list_tag_items(id, params = nil, headers = nil)
-      get("/api/v2/tags/#{id}/items", params, headers)
-    end
-
-    # ### Qiita::Client#list_user_items(user_id, params = nil, headers = nil)
-    # 特定のユーザの投稿一覧を作成日時の降順で返します。
-    #
-    def list_user_items(user_id, params = nil, headers = nil)
-      get("/api/v2/users/#{user_id}/items", params, headers)
-    end
-
-    # ### Qiita::Client#list_user_stocks(user_id, params = nil, headers = nil)
-    # 特定のユーザがストックした投稿一覧をストックした日時の降順で返します。
-    #
-    def list_user_stocks(user_id, params = nil, headers = nil)
-      get("/api/v2/users/#{user_id}/stocks", params, headers)
-    end
-
-    # ### Qiita::Client#get_item_stock(item_id, params = nil, headers = nil)
-    # 特定の投稿をストックしている場合に204を返します。
-    #
-    def get_item_stock(item_id, params = nil, headers = nil)
-      get("/api/v2/items/#{item_id}/stock", params, headers)
-    end
-
-    # ### Qiita::Client#stock_item(item_id, params = nil, headers = nil)
-    # 特定の投稿をストックします。
-    #
-    def stock_item(item_id, params = nil, headers = nil)
-      put("/api/v2/items/#{item_id}/stock", params, headers)
-    end
-
-    # ### Qiita::Client#unstock_item(item_id, params = nil, headers = nil)
-    # 特定の投稿をストックから取り除きます。
-    #
-    def unstock_item(item_id, params = nil, headers = nil)
-      delete("/api/v2/items/#{item_id}/stock", params, headers)
-    end
-
-    # ### Qiita::Client#like_item(item_id, params = nil, headers = nil)
-    # 特定の投稿に「いいね！」を付けます。Qiita:Teamでのみ有効です。
-    #
-    def like_item(item_id, params = nil, headers = nil)
-      put("/api/v2/items/#{item_id}/like", params, headers)
-    end
-
-    # ### Qiita::Client#unlike_item(item_id, params = nil, headers = nil)
-    # 特定の投稿への「いいね！」を取り消します。Qiita:Teamでのみ有効です。
-    #
-    def unlike_item(item_id, params = nil, headers = nil)
-      delete("/api/v2/items/#{item_id}/like", params, headers)
-    end
-
-    # ### Qiita::Client#list_projects(params = nil, headers = nil)
-    # チーム内に存在するプロジェクト一覧をプロジェクト作成日時の降順で返します。
-    #
-    def list_projects(params = nil, headers = nil)
-      get("/api/v2/projects", params, headers)
-    end
-
-    # ### Qiita::Client#get_project(id, params = nil, headers = nil)
-    # 特定のプロジェクトを返します。
-    #
-    def get_project(id, params = nil, headers = nil)
-      get("/api/v2/projects/#{id}", params, headers)
-    end
-
-    # ### Qiita::Client#create_project(params = nil, headers = nil)
-    # プロジェクトを新たに作成します。
-    #
-    def create_project(params = nil, headers = nil)
-      post("/api/v2/projects", params, headers)
-    end
-
-    # ### Qiita::Client#delete_project(id, params = nil, headers = nil)
-    # 特定のプロジェクトを削除します。
-    #
-    def delete_project(id, params = nil, headers = nil)
-      delete("/api/v2/projects/#{id}", params, headers)
-    end
-
-    # ### Qiita::Client#update_project(id, params = nil, headers = nil)
-    # 特定のプロジェクトを編集します。
-    #
-    def update_project(id, params = nil, headers = nil)
-      patch("/api/v2/projects/#{id}", params, headers)
+    def create_item_comment(params = nil, headers = nil)
+      post("/api/v2/items/:item_id/comments", params, headers)
     end
 
     # ### Qiita::Client#create_expanded_template(params = nil, headers = nil)
-    # 受け取ったテンプレート用文字列の変数を展開して返します。
+    # Get a template where its variables are expanded.
     #
     def create_expanded_template(params = nil, headers = nil)
       post("/api/v2/expanded_templates", params, headers)
     end
 
+    # ### Qiita::Client#list_authenticated_user_items(params = nil, headers = nil)
+    # List the authenticated user's items in newest order
+    #
+    def list_authenticated_user_items(params = nil, headers = nil)
+      get("/api/v2/authenticated_user/items", params, headers)
+    end
+
+    # ### Qiita::Client#list_items(params = nil, headers = nil)
+    # List items.
+    #
+    def list_items(params = nil, headers = nil)
+      get("/api/v2/items", params, headers)
+    end
+
+    # ### Qiita::Client#create_item(params = nil, headers = nil)
+    # Create an item.
+    #
+    def create_item(params = nil, headers = nil)
+      post("/api/v2/items", params, headers)
+    end
+
+    # ### Qiita::Client#delete_item(params = nil, headers = nil)
+    # Delete an item.
+    #
+    def delete_item(params = nil, headers = nil)
+      get("/api/v2/items/:item_id", params, headers)
+    end
+
+    # ### Qiita::Client#get_item(params = nil, headers = nil)
+    # Get an item.
+    #
+    def get_item(params = nil, headers = nil)
+      get("/api/v2/items/:item_id", params, headers)
+    end
+
+    # ### Qiita::Client#update_item(params = nil, headers = nil)
+    # Update an item.
+    #
+    def update_item(params = nil, headers = nil)
+      patch("/api/v2/items/:item_id", params, headers)
+    end
+
+    # ### Qiita::Client#unlike_item(params = nil, headers = nil)
+    # Unlike an item (only available on Qiita:Team).
+    #
+    def unlike_item(params = nil, headers = nil)
+      delete("/api/v2/items/:item_id/like", params, headers)
+    end
+
+    # ### Qiita::Client#like_item(params = nil, headers = nil)
+    # Like an item (only available on Qiita:Team).
+    #
+    def like_item(params = nil, headers = nil)
+      put("/api/v2/items/:item_id/like", params, headers)
+    end
+
+    # ### Qiita::Client#unstock_item(params = nil, headers = nil)
+    # Unstock an item.
+    #
+    def unstock_item(params = nil, headers = nil)
+      delete("/api/v2/items/:item_id/stock", params, headers)
+    end
+
+    # ### Qiita::Client#get_item_stock(params = nil, headers = nil)
+    # Check if you stocked an item.
+    #
+    def get_item_stock(params = nil, headers = nil)
+      get("/api/v2/items/:item_id/stock", params, headers)
+    end
+
+    # ### Qiita::Client#stock_item(params = nil, headers = nil)
+    # Stock an item.
+    #
+    def stock_item(params = nil, headers = nil)
+      put("/api/v2/items/:item_id/stock", params, headers)
+    end
+
+    # ### Qiita::Client#stock_item(params = nil, headers = nil)
+    # Stock an item.
+    #
+    def stock_item(params = nil, headers = nil)
+      put("/api/v2/items/:item_id/stock", params, headers)
+    end
+
+    # ### Qiita::Client#list_tag_items(params = nil, headers = nil)
+    # List tagged items in recently-tagged order.
+    #
+    def list_tag_items(params = nil, headers = nil)
+      get("/api/v2/tags/:tag_id/items", params, headers)
+    end
+
+    # ### Qiita::Client#list_user_items(params = nil, headers = nil)
+    # List a user's items in newest order.
+    #
+    def list_user_items(params = nil, headers = nil)
+      get("/api/v2/users/:user_id/items", params, headers)
+    end
+
+    # ### Qiita::Client#list_user_stocks(params = nil, headers = nil)
+    # List a user's stocked items in recently-stocked order.
+    #
+    def list_user_stocks(params = nil, headers = nil)
+      get("/api/v2/users/:user_id/stocks", params, headers)
+    end
+
+    # ### Qiita::Client#list_projects(params = nil, headers = nil)
+    # List projects in newest order.
+    #
+    def list_projects(params = nil, headers = nil)
+      get("/api/v2/projects", params, headers)
+    end
+
+    # ### Qiita::Client#create_project(params = nil, headers = nil)
+    # Create a new project.
+    #
+    def create_project(params = nil, headers = nil)
+      post("/api/v2/projects", params, headers)
+    end
+
+    # ### Qiita::Client#delete_project(params = nil, headers = nil)
+    # Delete a project.
+    #
+    def delete_project(params = nil, headers = nil)
+      delete("/api/v2/projects/:project_id", params, headers)
+    end
+
+    # ### Qiita::Client#get_project(params = nil, headers = nil)
+    # Get a project.
+    #
+    def get_project(params = nil, headers = nil)
+      get("/api/v2/projects/:project_id", params, headers)
+    end
+
+    # ### Qiita::Client#patch_project(params = nil, headers = nil)
+    # Update a project
+    #
+    def patch_project(params = nil, headers = nil)
+      patch("/api/v2/projects/:project_id", params, headers)
+    end
+
     # ### Qiita::Client#list_tags(params = nil, headers = nil)
-    # 全てのタグ一覧をタグ作成日時の降順で返します。
+    # List tags in newest order.
     #
     def list_tags(params = nil, headers = nil)
       get("/api/v2/tags", params, headers)
     end
 
-    # ### Qiita::Client#get_tag(id, params = nil, headers = nil)
-    # 特定のタグを返します。
+    # ### Qiita::Client#get_tag(params = nil, headers = nil)
+    # Get a tag.
     #
-    def get_tag(id, params = nil, headers = nil)
-      get("/api/v2/tags/#{id}", params, headers)
+    def get_tag(params = nil, headers = nil)
+      get("/api/v2/tags/:tag_id", params, headers)
     end
 
-    # ### Qiita::Client#list_user_following_tags(user_id, params = nil, headers = nil)
-    # 特定のユーザがフォローしているタグ一覧をフォローした日時の降順で返します。
+    # ### Qiita::Client#list_user_following_tags(params = nil, headers = nil)
+    # List tags a user is following to in recently-tagged order.
     #
-    def list_user_following_tags(user_id, params = nil, headers = nil)
-      get("/api/v2/users/#{user_id}/following_tags", params, headers)
+    def list_user_following_tags(params = nil, headers = nil)
+      get("/api/v2/users/:user_id/following_tags", params, headers)
     end
 
-    # ### Qiita::Client#get_tag_following(id, params = nil, headers = nil)
-    # 特定のタグをフォローしている場合に204を返します。
+    # ### Qiita::Client#unfollow_tag(params = nil, headers = nil)
+    # Unfollow a tag.
     #
-    def get_tag_following(id, params = nil, headers = nil)
-      get("/api/v2/tags/#{id}/following", params, headers)
+    def unfollow_tag(params = nil, headers = nil)
+      delete("/api/v2/tags/:tag_id/following", params, headers)
     end
 
-    # ### Qiita::Client#follow_tag(id, params = nil, headers = nil)
-    # 特定のタグをフォローします。
+    # ### Qiita::Client#get_tag_following(params = nil, headers = nil)
+    # Check if you are following a tag or not.
     #
-    def follow_tag(id, params = nil, headers = nil)
-      put("/api/v2/tags/#{id}/following", params, headers)
+    def get_tag_following(params = nil, headers = nil)
+      get("/api/v2/tags/:tag_id/following", params, headers)
     end
 
-    # ### Qiita::Client#unfollow_tag(id, params = nil, headers = nil)
-    # 特定のタグへのフォローを解除します。
+    # ### Qiita::Client#follow_tag(params = nil, headers = nil)
+    # Follow a tag.
     #
-    def unfollow_tag(id, params = nil, headers = nil)
-      delete("/api/v2/tags/#{id}/following", params, headers)
+    def follow_tag(params = nil, headers = nil)
+      put("/api/v2/tags/:tag_id/following", params, headers)
     end
 
-    # ### Qiita::Client#create_tagging(item_id, params = nil, headers = nil)
-    # 投稿にタグを追加します。Qiita:Teamでのみ有効です。
+    # ### Qiita::Client#create_tagging(params = nil, headers = nil)
+    # Add a tag to an item (only available on Qiita:Team)
     #
-    def create_tagging(item_id, params = nil, headers = nil)
-      post("/api/v2/items/#{item_id}/taggings", params, headers)
+    def create_tagging(params = nil, headers = nil)
+      post("/api/v2/items/:item_id/taggings", params, headers)
     end
 
-    # ### Qiita::Client#delete_tagging(item_id, name, params = nil, headers = nil)
-    # 投稿から指定されたタグを取り除きます。Qiita:Teamでのみ有効です。
+    # ### Qiita::Client#delete_tagging(params = nil, headers = nil)
+    # Remove a tag from an item (only available on Qiita:Team)
     #
-    def delete_tagging(item_id, name, params = nil, headers = nil)
-      delete("/api/v2/items/#{item_id}/taggings/#{name}", params, headers)
+    def delete_tagging(params = nil, headers = nil)
+      delete("/api/v2/items/:item_id/taggings/:tagging_id", params, headers)
     end
 
     # ### Qiita::Client#list_teams(params = nil, headers = nil)
-    # 現在のリクエストで認証されているユーザが所属している全てのチームを、チーム作成日時の降順で返します。
+    # List teams the user belongs to in newest order.
     #
     def list_teams(params = nil, headers = nil)
       get("/api/v2/teams", params, headers)
     end
 
     # ### Qiita::Client#list_templates(params = nil, headers = nil)
-    # そのチームに存在するテンプレート一覧を返します。
+    # List templates in a team.
     #
     def list_templates(params = nil, headers = nil)
       get("/api/v2/templates", params, headers)
     end
 
-    # ### Qiita::Client#get_template(id, params = nil, headers = nil)
-    # 特定のテンプレートを返します。
+    # ### Qiita::Client#delete_template(params = nil, headers = nil)
+    # Delete a template.
     #
-    def get_template(id, params = nil, headers = nil)
-      get("/api/v2/templates/#{id}", params, headers)
+    def delete_template(params = nil, headers = nil)
+      delete("/api/v2/templates/:template_id", params, headers)
     end
 
-    # ### Qiita::Client#delete_template(id, params = nil, headers = nil)
-    # 特定のテンプレートを削除します。
+    # ### Qiita::Client#get_template(params = nil, headers = nil)
+    # Get a template.
     #
-    def delete_template(id, params = nil, headers = nil)
-      delete("/api/v2/templates/#{id}", params, headers)
+    def get_template(params = nil, headers = nil)
+      get("/api/v2/templates/:template_id", params, headers)
     end
 
     # ### Qiita::Client#create_template(params = nil, headers = nil)
-    # 新しくテンプレートを作成します。
+    # Create a new template.
     #
     def create_template(params = nil, headers = nil)
       post("/api/v2/templates", params, headers)
     end
 
-    # ### Qiita::Client#update_template(id, params = nil, headers = nil)
-    # 特定のテンプレートを編集します。
+    # ### Qiita::Client#update_template(params = nil, headers = nil)
+    # Update a template.
     #
-    def update_template(id, params = nil, headers = nil)
-      patch("/api/v2/templates/#{id}", params, headers)
+    def update_template(params = nil, headers = nil)
+      patch("/api/v2/templates/:template_id", params, headers)
+    end
+
+    # ### Qiita::Client#list_item_stockers(params = nil, headers = nil)
+    # List users who stocked an item in recent-stocked order.
+    #
+    def list_item_stockers(params = nil, headers = nil)
+      get("/api/v2/items/:item_id/stockers", params, headers)
     end
 
     # ### Qiita::Client#list_users(params = nil, headers = nil)
-    # 全てのユーザの一覧を作成日時の降順で返します。
+    # List users in newest order.
     #
     def list_users(params = nil, headers = nil)
       get("/api/v2/users", params, headers)
     end
 
-    # ### Qiita::Client#get_user(id, params = nil, headers = nil)
-    # 特定のユーザを返します。
+    # ### Qiita::Client#get_user(params = nil, headers = nil)
+    # Get a user.
     #
-    def get_user(id, params = nil, headers = nil)
-      get("/api/v2/users/#{id}", params, headers)
+    def get_user(params = nil, headers = nil)
+      get("/api/v2/users/:user_id", params, headers)
     end
 
-    # ### Qiita::Client#get_authenticated_user(params = nil, headers = nil)
-    # アクセストークンに紐付いたユーザを返します。
+    # ### Qiita::Client#list_user_followees(params = nil, headers = nil)
+    # List users a user is following.
     #
-    def get_authenticated_user(params = nil, headers = nil)
-      get("/api/v2/authenticated_user", params, headers)
+    def list_user_followees(params = nil, headers = nil)
+      get("/api/v2/users/:user_id/followees", params, headers)
     end
 
-    # ### Qiita::Client#list_user_followees(user_id, params = nil, headers = nil)
-    # 特定のユーザがフォローしているユーザ一覧を返します。
+    # ### Qiita::Client#list_user_followers(params = nil, headers = nil)
+    # List users who are following a user.
     #
-    def list_user_followees(user_id, params = nil, headers = nil)
-      get("/api/v2/users/#{user_id}/followees", params, headers)
+    def list_user_followers(params = nil, headers = nil)
+      get("/api/v2/users/:user_id/followers", params, headers)
     end
 
-    # ### Qiita::Client#list_user_followers(user_id, params = nil, headers = nil)
-    # 特定のユーザをフォローしているユーザ一覧を返します。
+    # ### Qiita::Client#unfollow_user(params = nil, headers = nil)
+    # Unfollow a user.
     #
-    def list_user_followers(user_id, params = nil, headers = nil)
-      get("/api/v2/users/#{user_id}/followers", params, headers)
+    def unfollow_user(params = nil, headers = nil)
+      delete("/api/v2/users/:user_id/following", params, headers)
     end
 
-    # ### Qiita::Client#list_item_stockers(item_id, params = nil, headers = nil)
-    # 特定の投稿をストックしているユーザ一覧を、ストックした日時の降順で返します。
+    # ### Qiita::Client#get_user_following(params = nil, headers = nil)
+    # Check if the current user is following a user.
     #
-    def list_item_stockers(item_id, params = nil, headers = nil)
-      get("/api/v2/items/#{item_id}/stockers", params, headers)
+    def get_user_following(params = nil, headers = nil)
+      get("/api/v2/users/:user_id/following", params, headers)
     end
 
-    # ### Qiita::Client#get_user_following(user_id, params = nil, headers = nil)
-    # 特定のユーザをフォローしている場合に204を返します。
+    # ### Qiita::Client#follow_user(params = nil, headers = nil)
+    # Follow a user.
     #
-    def get_user_following(user_id, params = nil, headers = nil)
-      get("/api/v2/users/#{user_id}/following", params, headers)
-    end
-
-    # ### Qiita::Client#follow_user(user_id, params = nil, headers = nil)
-    # 特定のユーザをフォローします。
-    #
-    def follow_user(user_id, params = nil, headers = nil)
-      put("/api/v2/users/#{user_id}/following", params, headers)
-    end
-
-    # ### Qiita::Client#unfollow_user(user_id, params = nil, headers = nil)
-    # 特定のユーザへのフォローを外します。
-    #
-    def unfollow_user(user_id, params = nil, headers = nil)
-      delete("/api/v2/users/#{user_id}/following", params, headers)
+    def follow_user(params = nil, headers = nil)
+      put("/api/v2/users/:user_id/following", params, headers)
     end
   end
 end
