@@ -1,3 +1,6 @@
+## 1.3.1
+- Fix client methods that have templated path (#12, thx @mzp)
+
 ## 1.3.0
 - Update methods and their descriptions
 
