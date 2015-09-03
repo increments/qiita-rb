@@ -196,21 +196,21 @@ module Qiita
       post("/api/v2/projects", params, headers)
     end
 
-    # ### Qiita::Client#delete_project(params = nil, headers = nil)
+    # ### Qiita::Client#delete_project(project_id, params = nil, headers = nil)
     # Delete a project.
     #
     def delete_project(project_id, params = nil, headers = nil)
       delete("/api/v2/projects/#{project_id}", params, headers)
     end
 
-    # ### Qiita::Client#get_project(params = nil, headers = nil)
+    # ### Qiita::Client#get_project(project_id, params = nil, headers = nil)
     # Get a project.
     #
     def get_project(project_id, params = nil, headers = nil)
       get("/api/v2/projects/#{project_id}", params, headers)
     end
 
-    # ### Qiita::Client#patch_project(params = nil, headers = nil)
+    # ### Qiita::Client#patch_project(project_id, params = nil, headers = nil)
     # Update a project
     #
     def patch_project(project_id, params = nil, headers = nil)
@@ -266,10 +266,10 @@ module Qiita
       post("/api/v2/items/#{item_id}/taggings", params, headers)
     end
 
-    # ### Qiita::Client#delete_tagging(item_id, params = nil, headers = nil)
+    # ### Qiita::Client#delete_tagging(item_id, tagging_id, params = nil, headers = nil)
     # Remove a tag from an item (only available on Qiita:Team)
     #
-    def delete_tagging(item_id, params = nil, headers = nil)
+    def delete_tagging(item_id, tagging_id, params = nil, headers = nil)
       delete("/api/v2/items/#{item_id}/taggings/#{tagging_id}", params, headers)
     end
 

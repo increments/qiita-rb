@@ -61,7 +61,7 @@ methods = links.map do |link|
     href: link.href,
     method_name: link.title,
     request_method: link.method.downcase,
-    required_argument_names: link.href.scan(%r<{\((.+?)\)}>).flatten.map do |element|
+    required_argument_names: link.href.scan(%r<:([^/]+)>).flatten.map do |element|
       element.split("/").last
     end,
   )
