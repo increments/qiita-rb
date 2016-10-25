@@ -5,7 +5,7 @@
 
 Qiita API v2 client library and CLI tool, written in Ruby.
 
-### Install
+## Install
 
 Note: requires Ruby 2.0.0 or higher.
 
