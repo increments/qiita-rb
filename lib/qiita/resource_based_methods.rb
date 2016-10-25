@@ -102,7 +102,7 @@ module Qiita
     # Delete an item.
     #
     def delete_item(item_id, params = nil, headers = nil)
-      get("/api/v2/items/#{item_id}", params, headers)
+      delete("/api/v2/items/#{item_id}", params, headers)
     end
 
     # ### Qiita::Client#get_item(item_id, params = nil, headers = nil)
