@@ -142,7 +142,7 @@ client.connection.response :logger
 ### Qiita::Client#delete_project(id, params = nil, headers = nil)
 特定のプロジェクトを削除します。
 
-### Qiita::Client#update_project(id, params = nil, headers = nil)
+### Qiita::Client#patch_project(id, params = nil, headers = nil)
 特定のプロジェクトを編集します。
 
 ### Qiita::Client#create_expanded_template(params = nil, headers = nil)
