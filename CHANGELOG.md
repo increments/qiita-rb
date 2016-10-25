@@ -1,3 +1,10 @@
+## v1.3.3
+
+- Add `#get_item_like` method
+- Add `#list_item_likes` method
+- Change method name from `#patch_project` to `#update_project`
+- Fix broken `#delete_item`
+
 ## v1.3.2
 
 - Fix broken client methods
