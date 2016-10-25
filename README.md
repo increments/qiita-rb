@@ -15,8 +15,6 @@ gem install qiita
 
 ## Library
 
-See [/doc](/doc) for more details.
-
 ```ruby
 require "qiita"
 
@@ -61,7 +59,7 @@ $ qiita list_user_items r7kamura
 
 ### Method and Arguments
 
-Pass [Qiita::Client's method name](doc/client.md) and required arguments.
+Pass `Qiita::Client` method name and required arguments.
 
 ### Access token
 
