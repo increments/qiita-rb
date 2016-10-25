@@ -1,8 +1,8 @@
 ## 1.3.2
-- Fix broken client methods (thx @kmrshntr)
+- Fix broken client methods
 
 ## 1.3.1
-- Fix client methods that have templated path (#12, thx @mzp)
+- Fix client methods that have templated path
 
 ## 1.3.0
 - Update methods and their descriptions
