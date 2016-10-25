@@ -33,7 +33,7 @@ module Qiita
     end
 
     def method_name
-      ARGV[0]
+      @argv[0]
     end
 
     def params
@@ -106,7 +106,7 @@ module Qiita
         params = {}
         headers = {}
         arguments = []
-        ARGV[1..-1].each do |section|
+        @argv[1..-1].each do |section|
           case
           when /(?<key>.+):(?<value>[^=]+)/ =~ section
             headers[key] = value
