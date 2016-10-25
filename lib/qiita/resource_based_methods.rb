@@ -217,10 +217,10 @@ module Qiita
       get("/api/v2/projects/#{project_id}", params, headers)
     end
 
-    # ### Qiita::Client#patch_project(project_id, params = nil, headers = nil)
+    # ### Qiita::Client#update_project(project_id, params = nil, headers = nil)
     # Update a project
     #
-    def patch_project(project_id, params = nil, headers = nil)
+    def update_project(project_id, params = nil, headers = nil)
       patch("/api/v2/projects/#{project_id}", params, headers)
     end
 
