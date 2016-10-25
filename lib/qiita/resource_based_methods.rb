@@ -133,6 +133,13 @@ module Qiita
       put("/api/v2/items/#{item_id}/like", params, headers)
     end
 
+    # ### Qiita::Client#stock_item(item_id, params = nil, headers = nil)
+    # Stock an item.
+    #
+    def stock_item(item_id, params = nil, headers = nil)
+      put("/api/v2/items/#{item_id}/stock", params, headers)
+    end
+
     # ### Qiita::Client#unstock_item(item_id, params = nil, headers = nil)
     # Unstock an item.
     #
@@ -147,11 +154,11 @@ module Qiita
       get("/api/v2/items/#{item_id}/stock", params, headers)
     end
 
-    # ### Qiita::Client#stock_item(item_id, params = nil, headers = nil)
-    # Stock an item.
+    # ### Qiita::Client#get_item_like(item_id, params = nil, headers = nil)
+    # Check if you liked an item.
     #
-    def stock_item(item_id, params = nil, headers = nil)
-      put("/api/v2/items/#{item_id}/stock", params, headers)
+    def get_item_like(item_id, params = nil, headers = nil)
+      get("/api/v2/items/#{item_id}/like", params, headers)
     end
 
     # ### Qiita::Client#stock_item(item_id, params = nil, headers = nil)
