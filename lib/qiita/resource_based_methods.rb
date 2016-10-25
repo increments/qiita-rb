@@ -182,6 +182,13 @@ module Qiita
       get("/api/v2/users/#{user_id}/stocks", params, headers)
     end
 
+    # ### Qiita::Client#list_item_likes(item_id, params = nil, headers = nil)
+    # List likes in newest order.
+    #
+    def list_item_likes(item_id, params = nil, headers = nil)
+      get("/api/v2/items/#{item_id}/likes", params, headers)
+    end
+
     # ### Qiita::Client#list_projects(params = nil, headers = nil)
     # List projects in newest order.
     #
