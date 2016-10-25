@@ -1,4 +1,7 @@
-# Qiita [![Build Status](https://travis-ci.org/increments/qiita-rb.svg?branch=master)](https://travis-ci.org/increments/qiita-rb)
+# Qiita
+
+[![Gem Version](https://badge.fury.io/rb/qiita.svg)](https://rubygems.org/gems/qiita)
+[![Build Status](https://travis-ci.org/increments/qiita-rb.svg?branch=master)](https://travis-ci.org/increments/qiita-rb)
 
 Qiita API v2 client library and CLI tool, written in Ruby.
 
