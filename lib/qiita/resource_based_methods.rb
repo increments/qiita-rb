@@ -231,6 +231,48 @@ module Qiita
       patch("/api/v2/projects/#{project_id}", params, headers)
     end
 
+    # ### Qiita::Client#create_comment_reaction(comment_id, params = nil, headers = nil)
+    # Add an emoji reaction to a comment.
+    #
+    def create_comment_reaction(comment_id, params = nil, headers = nil)
+      post("/api/v2/comments/#{comment_id}/reactions", params, headers)
+    end
+
+    # ### Qiita::Client#create_item_reaction(item_id, params = nil, headers = nil)
+    # Add an emoji reaction to an item.
+    #
+    def create_item_reaction(item_id, params = nil, headers = nil)
+      post("/api/v2/items/#{item_id}/reactions", params, headers)
+    end
+
+    # ### Qiita::Client#delete_comment_reaction(comment_id, reaction_name, params = nil, headers = nil)
+    # Delete an emoji reaction from a comment.
+    #
+    def delete_comment_reaction(comment_id, reaction_name, params = nil, headers = nil)
+      delete("/api/v2/comments/#{comment_id}/reactions/#{reaction_name}", params, headers)
+    end
+
+    # ### Qiita::Client#delete_item_reaction(item_id, reaction_name, params = nil, headers = nil)
+    # Delete an emoji reaction from an item.
+    #
+    def delete_item_reaction(item_id, reaction_name, params = nil, headers = nil)
+      delete("/api/v2/items/#{item_id}/reactions/#{reaction_name}", params, headers)
+    end
+
+    # ### Qiita::Client#list_comment_reactions(comment_id, params = nil, headers = nil)
+    # List emoji reactions of an comment.
+    #
+    def list_comment_reactions(comment_id, params = nil, headers = nil)
+      get("/api/v2/comments/#{comment_id}/reactions", params, headers)
+    end
+
+    # ### Qiita::Client#list_item_reactions(item_id, params = nil, headers = nil)
+    # List emoji reactions of an item.
+    #
+    def list_item_reactions(item_id, params = nil, headers = nil)
+      get("/api/v2/items/#{item_id}/reactions", params, headers)
+    end
+
     # ### Qiita::Client#list_tags(params = nil, headers = nil)
     # List tags in newest order.
     #
