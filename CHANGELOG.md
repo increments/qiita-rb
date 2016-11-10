@@ -1,3 +1,7 @@
+## v1.3.4
+
+- Add new methods about emoji reactions
+
 ## v1.3.3
 
 - Add `#get_item_like` method
