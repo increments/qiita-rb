@@ -245,6 +245,13 @@ module Qiita
       post("/api/v2/items/#{item_id}/reactions", params, headers)
     end
 
+    # ### Qiita::Client#create_project_reaction(project_id, params = nil, headers = nil)
+    # Add an emoji reaction to an project.
+    #
+    def create_project_reaction(project_id, params = nil, headers = nil)
+      post("/api/v2/projects/#{project_id}/reactions", params, headers)
+    end
+
     # ### Qiita::Client#delete_comment_reaction(comment_id, reaction_name, params = nil, headers = nil)
     # Delete an emoji reaction from a comment.
     #
@@ -259,18 +266,32 @@ module Qiita
       delete("/api/v2/items/#{item_id}/reactions/#{reaction_name}", params, headers)
     end
 
+    # ### Qiita::Client#delete_project_reaction(project_id, reaction_name, params = nil, headers = nil)
+    # Delete an emoji reaction from an project.
+    #
+    def delete_project_reaction(project_id, reaction_name, params = nil, headers = nil)
+      delete("/api/v2/projects/#{project_id}/reactions/#{reaction_name}", params, headers)
+    end
+
     # ### Qiita::Client#list_comment_reactions(comment_id, params = nil, headers = nil)
-    # List emoji reactions of an comment.
+    # List emoji reactions of an comment in recently-created order.
     #
     def list_comment_reactions(comment_id, params = nil, headers = nil)
       get("/api/v2/comments/#{comment_id}/reactions", params, headers)
     end
 
     # ### Qiita::Client#list_item_reactions(item_id, params = nil, headers = nil)
-    # List emoji reactions of an item.
+    # List emoji reactions of an item in recently-created order.
     #
     def list_item_reactions(item_id, params = nil, headers = nil)
       get("/api/v2/items/#{item_id}/reactions", params, headers)
+    end
+
+    # ### Qiita::Client#list_project_reactions(project_id, params = nil, headers = nil)
+    # List emoji reactions of an project in recently-created order.
+    #
+    def list_project_reactions(project_id, params = nil, headers = nil)
+      get("/api/v2/projects/#{project_id}/reactions", params, headers)
     end
 
     # ### Qiita::Client#list_tags(params = nil, headers = nil)
