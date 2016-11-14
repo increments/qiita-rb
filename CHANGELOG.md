@@ -1,3 +1,7 @@
+## v1.3.5
+
+- Add project reaction methods
+
 ## v1.3.4
 
 - Add new methods about emoji reactions
