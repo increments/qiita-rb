@@ -1,3 +1,7 @@
+## Unreleased
+
+- Migrate CI/CD platform from Travis CI to GitHub Actions
+
 ## v1.3.5
 
 - Add project reaction methods
