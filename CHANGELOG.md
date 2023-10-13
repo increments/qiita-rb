@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Migrate CI/CD platform from Travis CI to GitHub Actions
+- Requires Ruby 3.0.0 or higher
 
 ## v1.3.5
 

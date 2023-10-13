@@ -49,7 +49,7 @@ describe Qiita::Client do
   end
 
   let(:client) do
-    described_class.new(options)
+    described_class.new(**options)
   end
 
   let(:options) do
@@ -116,11 +116,7 @@ describe Qiita::Client do
 
   describe ".new" do
     subject do
-      described_class.new(*arguments)
-    end
-
-    let(:arguments) do
-      [options]
+      described_class.new(**options)
     end
 
     let(:options) do
@@ -133,9 +129,9 @@ describe Qiita::Client do
       end
     end
 
-    context "without any arguments" do
-      let(:arguments) do
-        []
+    context "without any options" do
+      let(:options) do
+        {}
       end
       include_examples "returns a Qiita::Client"
     end
@@ -281,7 +277,7 @@ describe Qiita::Client do
       end
 
       let(:requested_url) do
-        "https://#{requested_host}#{URI.escape(path)}"
+        "https://#{requested_host}#{CGI.escape(path)}"
       end
 
       it "sends request with escaped path" do
