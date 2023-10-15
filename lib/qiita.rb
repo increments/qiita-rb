@@ -2,7 +2,7 @@ require "active_support/core_ext/object/blank"
 require "active_support/core_ext/string/inflections"
 require "active_support/core_ext/string/strip"
 require "faraday"
-require "faraday_middleware"
+require "faraday_middleware" if Faraday::VERSION.start_with?(/0|1/)
 require "json"
 require "rack/utils"
 require "rainbow"

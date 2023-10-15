@@ -16,8 +16,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "activesupport"
-  spec.add_dependency "faraday", "~> 0.9"
-  spec.add_dependency "faraday_middleware"
+  spec.add_dependency "faraday", ">= 0.17", "< 3.0"
   spec.add_dependency "rack"
   spec.add_dependency "rainbow"
   spec.add_dependency "rouge"
@@ -27,5 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
-  spec.add_development_dependency "webmock", "1.20.4"
+  spec.add_development_dependency "webmock", "~> 3"
 end
