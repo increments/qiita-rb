@@ -341,6 +341,10 @@ describe Qiita::Client do
       204
     end
 
+    let(:response_hash) do
+      nil
+    end
+
     include_examples "valid condition"
     include_examples "sends request with JSON-encoded body"
   end
@@ -360,6 +364,10 @@ describe Qiita::Client do
 
     let(:status_code) do
       204
+    end
+
+    let(:response_hash) do
+      nil
     end
 
     include_examples "valid condition"
