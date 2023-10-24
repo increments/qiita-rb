@@ -1,5 +1,7 @@
 ## Unreleased
 
+## v1.5.0
+
 - Require Faraday v2
 
 ## v1.4.0
