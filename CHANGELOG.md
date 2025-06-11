@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Require Ruby 3.2.0 or higher
+
 ## v1.5.0
 
 - Require Faraday v2
