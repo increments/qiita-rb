@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Require Ruby 3.2.0 or higher
+- Pin github actions
 
 ## v1.5.0
 
