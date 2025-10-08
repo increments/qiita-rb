@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rainbow"
   spec.add_dependency "rouge"
   spec.add_dependency "slop", "< 4.0.0"
+  spec.add_dependency "uri", ">= 1.0.4"
   spec.add_development_dependency "bundler", "~> 2.2"
   spec.add_development_dependency "json_schema"
   spec.add_development_dependency "pry"
