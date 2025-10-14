@@ -1,7 +1,10 @@
 ## Unreleased
 
+## v1.6.0
+
 - Require Ruby 3.2.0 or higher
 - Pin github actions
+- Add a dependency on the uri gem to use version 1.0.4 or higher
 
 ## v1.5.0
 
